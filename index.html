@@ -1020,6 +1020,51 @@ details.steps[open] summary{margin-bottom:8px}
 .exsel span{font-size:13px;color:var(--muted);font-weight:600}
 .exsel select{flex:1;min-width:0;height:42px;border:0;border-radius:10px;background:var(--bg);color:var(--ink);font:600 16px 'Barlow',sans-serif;padding:0 10px}
 .qchips .chip{max-width:100%;white-space:normal;text-align:left;height:auto;min-height:38px;padding:6px 12px}
+
+/* compact one-screen */
+.app{padding-bottom:96px}
+.thero{padding:12px 16px;border-radius:18px;margin-bottom:10px}
+.thero h1{font-size:26px;max-width:70%}.thero p{display:none}
+.thstats{margin-top:6px;gap:16px}.thstats b{font-size:18px}.thstats span{font-size:11px}
+.thero .tart{width:84px;height:84px;right:-6px;top:-4px}
+.hero{padding:14px 16px}.hero h1{font-size:25px;margin:2px 0 6px}.hero .heroex{display:none}
+.hero .heroan{top:6px;width:120px;height:140px}
+.tiles .tile{padding:10px 12px}
+.daygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.daygrid .day-card{margin:0;padding:10px 10px 10px 10px;min-height:0}
+.daygrid .day-card b{font-size:16px;padding-right:0;padding-top:30px;display:block}
+.daygrid .dtag{display:none!important}
+.daygrid .dnum{left:10px;top:10px;width:26px;height:26px;font-size:15px;border-radius:8px}
+.daygrid .badge{top:12px;right:10px;font-size:11px}
+.daygrid .dthumbs{margin:4px 0 2px;flex-wrap:wrap}.daygrid .dthumbs .exth.sm{width:26px;height:22px}
+.daygrid .dmeta{font-size:11px}
+.tpl.emptyw{min-height:44px;padding:10px 14px;text-align:center}
+.bodybox .figs svg{max-height:280px}
+.bodybox p.sub{display:none}
+.regsel{margin-top:8px}
+
+.subseg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;margin:0 0 10px;padding:3px;border-radius:12px;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.subseg button{border:0;background:transparent;color:var(--muted);font:600 14px 'Barlow',sans-serif;min-height:34px;border-radius:9px;cursor:pointer}
+.subseg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+.exsel{margin-bottom:10px}
+.tools{gap:6px}.tools button{padding:10px 8px;min-height:0}.tools button span{display:none}.tools button b{font-size:14px}
+.sugg{padding:10px 12px}.sugg b{font-size:15px}.sugg span{font-size:13px}
+.pmenu .prow2{min-height:52px;padding:8px 14px}
+.procard{padding:10px 12px;margin-top:8px}
+.pmenu+.note{display:none}
+body.tc #view{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 78px);overflow:hidden}
+body.tc .chat{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+body.tc #view>.note{display:none}
+body.tc .qchips{margin:6px 0}
+body.tc .linkbtn[data-a=cclear]{align-self:flex-start;min-height:30px}
+.exmini{padding:8px 10px;min-height:0}.exmini .exth.sm{width:30px;height:25px}
+.calgrid .cd{min-height:36px}
+.cmp img{max-height:220px;object-fit:cover}
+.win{min-height:62px;padding:10px}.win b{font-size:22px}
+.exb .set{padding-top:4px;padding-bottom:4px}
+.exb .pg{margin:6px 0}
+.cht{font:700 20px 'Barlow Condensed',sans-serif}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -1881,17 +1926,21 @@ function workout(){
   <button class="btn ghost danger" data-a="cancel">${armed==='cancel'?'Emin misin? Tekrar dokun':'Antrenmanı iptal et'}</button>`;
 }
 
+
 function charts(){
   const names=EX.map(e=>e.n).filter(n=>S.workouts.some(w=>w.ex.some(e=>e.n===n)));
   if(!names.length)return `<p class="empty">Antrenman kaydettikçe grafiklerin burada oluşacak.</p>`;
   if(!names.includes(progEx))progEx=names[0];
   const pts=exHistory(progEx),u=unit(progEx),first=pts[0].v,last=pts[pts.length-1].v,p=pctTxt(last,first),rec=records();
-  return `<label class="exsel"><span>Hareket</span><select data-c="pex" aria-label="Hareket seç">${names.map(n=>`<option value="${n}"${n===progEx?' selected':''}>${esc(nmT(n))}</option>`).join('')}</select></label>
-  <div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(last)} ${u}</b><span>Son antrenmandaki en iyi set</span></div>${p&&pts.length>1?`<div class="${last>=first?'up':'down'}">${p}<span>ilk kayda göre</span></div>`:''}</div>${lineChart(pts,u)}</div>
-  <h2>Haftalık hacim</h2><p class="sub">Her hafta kaldırdığın toplam ağırlık (kg × tekrar)</p><div class="chartbox">${bars()}</div>
-  ${advHtml()}<h2>Kişisel rekorlar</h2><div class="list" style="margin-top:10px">${Object.keys(rec).slice(0,recAll?99:3).map(n=>`<div class="row"><span>${nmH(n)}<small>${fmtDate(rec[n].date)}${ratioTxt(n,rec[n].v)}</small></span><span class="v">${fmtKg(rec[n].v)} ${unit(n)}</span></div>`).join('')}</div>${Object.keys(rec).length>3?`<button class="linkbtn" data-a="recall">${recAll?'Daha az göster':'Tüm rekorları gör ('+Object.keys(rec).length+')'}</button>`:''}`;
+  const seg=subSeg('chartsub',chartSub,[['guc','Güç'],['hacim','Hacim'],['rekor','Rekorlar'],['analiz','Analiz']]);
+  if(chartSub==='hacim')return seg+`<div class="chartbox"><div class="chart-top"><div><b class="cht">Haftalık hacim</b><span>Her hafta kaldırdığın toplam ağırlık</span></div></div>${bars()}</div>`;
+  if(chartSub==='rekor')return seg+`<div class="list">${Object.keys(rec).slice(0,7).map(n=>`<div class="row"><span>${nmH(n)}<small>${fmtDate(rec[n].date)}${ratioTxt(n,rec[n].v)}</small></span><span class="v">${fmtKg(rec[n].v)} ${unit(n)}</span></div>`).join('')||'<p class="empty">Henüz rekor yok.</p>'}</div>`;
+  if(chartSub==='analiz')return seg+advHtml().replace('<h2>Gelişmiş analiz</h2>','');
+  return seg+`<label class="exsel"><span>Hareket</span><select data-c="pex" aria-label="Hareket seç">${names.map(n=>`<option value="${n}"${n===progEx?' selected':''}>${esc(nmT(n))}</option>`).join('')}</select></label>
+  <div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(last)} ${u}</b><span>Son antrenmandaki en iyi set</span></div>${p&&pts.length>1?`<div class="${last>=first?'up':'down'}">${p}<span>ilk kayda göre</span></div>`:''}</div>${lineChart(pts,u)}</div>`;
 }
-
+function subSeg(a,cur,opts){return `<div class="subseg" role="group">${opts.map(([k,l])=>`<button class="${cur===k?'on':''}" data-a="${a}" data-v="${k}" aria-pressed="${cur===k}">${l}</button>`).join('')}</div>`;}
+let chartSub='guc',vSub='kilo',calSub='ay';
 const REG={
   gogus:{n:'Göğüs',s:'front',d:'İtme hareketlerinde çalışır, üst gövdenin önünü şekillendirir.'},
   omuz:{n:'Omuz',s:'both',d:'Baş üstü itişlerde ve kolu yana kaldırırken çalışır, omuz genişliği görüntüsünü belirler.'},
@@ -2145,13 +2194,13 @@ function bodyView(){
   if(!selReg)selReg=weak;
   return `<div class="${rec?'recmode':''}"><div class="modeseg" role="group" aria-label="Harita modu"><button class="${mapMode==='vol'?'on':''}" data-a="mapmode" data-v="vol" aria-pressed="${mapMode==='vol'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Yoğunluk</button><button class="${rec?'on':''}" data-a="mapmode" data-v="rec" aria-pressed="${rec}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/></svg>Toparlanma</button><button class="${mapMode==='3d'?'on':''}" data-a="mapmode" data-v="3d" aria-pressed="${mapMode==='3d'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>3D${isPro()?'':'<i class="prolock">★</i>'}</button></div><div class="chartbox bodybox">${mapMode==='3d'?spin3d(rs):`<div class="figs" id="figswrap">${figWithBubble('front',rs)}${figWithBubble('back',rs)}</div>`}
   ${rec?'<div class="legend" aria-hidden="true"><span><i class="lgr3"></i>Dinleniyor</span><span><i class="lgr1"></i>Toparlanıyor</span><span><i class="lgr0"></i>Hazır</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Son 48 saatte çalışılan kaslar dinleniyor; yeşil olanları bugün rahatça çalıştırabilirsin.</p></div>':'<div class="legend" aria-hidden="true"><span>Az</span><i class="lg0"></i><i class="lg1"></i><i class="lg2"></i><i class="lg3"></i><span>Çok</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Renkler son 30 günde her bölgeye yaptığın set sayısı. Bir kasa dokun, özeti yanında açılır.</p></div>'}
-  <div class="chips regchips" role="group" aria-label="Bölge seç">${keys.map(k=>`<button class="chip${k===selReg?' on':''}" data-a="reg" data-v="${k}" aria-pressed="${k===selReg}"><i class="dot lv${lvl(rs[k])}"></i>${REG[k].n}</button>`).join('')}</div>
+  <label class="exsel regsel"><span>Kas grubu</span><select data-c="regsel" aria-label="Kas grubu seç">${keys.map(k=>`<option value="${k}"${k===selReg?' selected':''}>${REG[k].n}${rec?'':' ('+rs[k]+' set)'}</option>`).join('')}</select></label>
   ${!rec&&selReg!==weak?`<button class="weak" data-a="reg" data-v="${weak}"><span>En az çalıştırdığın bölge</span><b>${REG[weak].n} bölgesini seç</b></button>`:''}
   ${rec?recPanel():''}
   <button class="btn" data-a="regsheet" style="margin-top:14px">${REG[selReg].n} hareketlerini gör</button></div>`;
 }
 function progress(){
-  return `${heroProgress()}${infoCard('progress')}${winsHtml()}<div class="chips pseg" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():plateauHtml()+charts()}`;
+  return `${heroProgress()}${infoCard('progress')}${pview==='charts'?winsHtml():''}<div class="chips pseg" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():(chartSub==='guc'?plateauHtml():'')+charts()}`;
 }
 function profileFull(){
   const r=S.rem,b=S.body;
@@ -2198,7 +2247,7 @@ function planView(){
   const editDay=(d,i)=>`<section class="pday"><input class="pdname" data-c="pdname" data-i="${i}" value="${esc(d.name)}" aria-label="Gün adı">${d.ex.map((x,j)=>`<div class="prow"><span class="pn">${nmH(x.n)}</span><div class="pst">${miniStep('ps',i,j,x.sets,'Set')}<span>×</span>${miniStep('pr',i,j,x.reps,'Tekrar')}</div><button class="x" data-a="pdel" data-i="${i}" data-j="${j}" aria-label="${x.n} hareketini kaldır">×</button></div>`).join('')}<select data-c="padd" data-i="${i}" aria-label="Hareket ekle"><option value="">+ Hareket ekle</option>${EX.filter(e=>!d.ex.some(x=>x.n===e.n)).map(e=>`<option value="${e.n}">${esc(nmT(e.n))}</option>`).join('')}</select></section>`;
   return `${heroWorkout()}${infoCard('workout')}
   <div class="progsum"><div><span class="eb">Programın</span><b>${esc(p.name)}</b><span>${GOALS[p.goal].n}, haftada ${p.days.length} gün</span></div><button class="small-btn ghostb" data-a="pedit">${progEdit?'Bitti':'Düzenle'}</button></div>
-  ${savedProgs()}${progEdit?p.days.map(editDay).join('')+'<button class="btn ghost" data-a="pnew">Programı baştan oluştur</button>':p.days.map(dayCard).join('')+'<button class="tpl" data-a="start" data-v="0"><b>Boş antrenman</b><span>Programdan bağımsız, hareketleri kendin ekle</span></button>'}${progEdit?'':plateauHtml()+suggestHtml()}${toolsRow()}`;
+  ${savedProgs()}${progEdit?p.days.map(editDay).join('')+'<button class="btn ghost" data-a="pnew">Programı baştan oluştur</button>':'<div class="daygrid">'+p.days.map(dayCard).join('')+'</div><button class="tpl emptyw" data-a="start" data-v="0"><b>+ Boş antrenman</b></button>'}${progEdit?'':plateauHtml()+suggestHtml()}${toolsRow()}`;
 }
 let mapMode='vol',wDraft=null,mDraft=null,lastSum=null;
 const BIGINC=['Squat','Deadlift','Romanian deadlift','Leg press','Hip thrust'];
@@ -2271,19 +2320,6 @@ function smartHtml(lim){
 }
 const MEASN={bel:'Bel',gogus:'Göğüs',kol:'Kol',kalca:'Kalça'};
 function lastWeight(){const l=S.wlog[S.wlog.length-1];return l?l.v:S.body.w;}
-function bodyTrack(){
-  const wl=S.wlog.slice().sort((a,b)=>new Date(a.date)-new Date(b.date)),lw=lastWeight(),wd=wDraft==null?lw:wDraft,first=wl[0],ch=first?Math.round((lw-first.v)*10)/10:0;
-  const ms=S.meas.slice().sort((a,b)=>new Date(a.date)-new Date(b.date)),m0=ms[0],m1=ms[ms.length-1],ph=S.photos;
-  return `<div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(lw)} kg</b><span>Kilo, son ölçüm ${wl.length?fmtDate(wl[wl.length-1].date):''}</span></div>${wl.length>1?`<div class="neutral">${ch>0?'+':ch<0?'−':''}${fmtKg(Math.abs(ch))} kg<span>${fmtDate(first.date)} tarihinden beri</span></div>`:''}</div>${lineChart(wl.map(x=>({date:x.date,v:x.v})),'kg','Kilo grafiği')}</div>
-  <div class="list" style="margin-top:10px"><div class="row"><span>Bugünkü kilon</span><div class="stepper small"><button data-a="wl" data-d="-1" aria-label="Kiloyu azalt">−</button><input data-c="wl" value="${fmtKg(wd)}" inputmode="decimal" aria-label="Bugünkü kilo"><button data-a="wl" data-d="1" aria-label="Kiloyu artır">+</button></div></div></div>
-  <button class="btn ghost" data-a="wlsave">Kiloyu kaydet</button>
-  <div class="reghead"><h2>Ölçüler</h2><button class="linkbtn" data-a="msopen">+ Ölçü ekle</button></div>
-  <div class="list" style="margin-top:10px">${m1?Object.keys(MEASN).map(k=>{const d=m0&&m0!==m1?Math.round((m1[k]-m0[k])*10)/10:0;return `<div class="row"><span>${MEASN[k]}<small>${fmtDate(m1.date)}</small></span><span class="v">${fmtKg(m1[k])} cm${d?`<small>${d>0?'+':'−'}${fmtKg(Math.abs(d))} cm, ${fmtDate(m0.date)} tarihinden beri</small>`:''}</span></div>`;}).join(''):'<p class="empty">Henüz ölçü yok.</p>'}</div>
-  <h2>İlerleme fotoğrafları</h2>${isPro()?'':'<button class="sugg lockt" data-a="paywall" data-v="photo"><b>Fotoğraflarla değişimini gör ★</b><span>İlk ve son fotoğrafını yan yana karşılaştır. Premium özelliği.</span></button>'}
-  ${isPro()&&ph.length>=2?`<div class="cmp"><figure><img src="${ph[0].src}" alt="İlk fotoğraf"><figcaption>${fmtDate(ph[0].date)}</figcaption></figure><figure><img src="${ph[ph.length-1].src}" alt="Son fotoğraf"><figcaption>${fmtDate(ph[ph.length-1].date)}</figcaption></figure></div>`:''}
-  <div class="phgrid"${isPro()?'':' hidden'}>${ph.map((p,i)=>`<div class="ph"><img src="${p.src}" alt="${fmtDate(p.date)} fotoğrafı"><span>${fmtDate(p.date)}</span><button class="phx" data-a="phdel" data-i="${i}" aria-label="Fotoğrafı sil">×</button></div>`).join('')}<label class="ph add"><input type="file" accept="image/*" data-c="photo" class="sr"><span>+ Fotoğraf ekle</span></label></div>
-  <p class="note">Fotoğraflar yalnızca bu cihazda saklanır, hiçbir yere gönderilmez. İlk ve son fotoğrafın yan yana gösterilir.</p>`;
-}
 function msModal(){
   return `<div class="card-top"><h3>Yeni ölçü</h3><button class="x" data-a="closemodal" aria-label="Kapat">×</button></div><div class="list">${Object.keys(MEASN).map(k=>`<div class="row"><span>${MEASN[k]} <em class="unit">cm</em></span><div class="ms"><button data-a="ms" data-k="${k}" data-d="-1" aria-label="${MEASN[k]} azalt">−</button><b>${fmtKg(mDraft[k])}</b><button data-a="ms" data-k="${k}" data-d="1" aria-label="${MEASN[k]} artır">+</button></div></div>`).join('')}</div><p class="note">Ölçüyü her seferinde aynı yerden, sabah ve aynı mezura ile al.</p><div class="cbtns"><button class="btn" data-a="mssave">Kaydet</button></div>`;
 }
@@ -2610,12 +2646,25 @@ function libModal(){return `<div class="card-top"><h3>Hareket k\u00fct\u00fcphan
   <div class="chips" style="margin-top:6px">${[['','T\u00fcm ekipman'],['bar','Bar'],['bw','V\u00fccut a\u011f\u0131rl\u0131\u011f\u0131'],['diger','Makine / damb\u0131l']].map(([k,l])=>`<button class="chip${lib.eq===k?' on':''}" data-a="libeq" data-v="${k}">${l}</button>`).join('')}</div>
   <div class="list liblist" id="liblist" style="margin-top:10px">${libList()}</div>
   ${lib.add?`<div class="cxform"><h4>Kendi hareketini ekle</h4><label class="fld"><span>Hareket ad\u0131</span><input data-c="cxn" value="${esc(cx.n)}" placeholder="\u00d6rn. Cable fly"></label><span class="sub">Ana kas grubu</span><div class="chips wrap">${Object.keys(REG).map(k=>`<button class="chip${cx.r===k?' on':''}" data-a="cxr" data-v="${k}">${REG[k].n}</button>`).join('')}</div><span class="sub" style="display:block;margin-top:8px">Ekipman</span><div class="chips wrap">${[['bar','Bar'],['bw','V\u00fccut a\u011f\u0131rl\u0131\u011f\u0131'],['diger','Makine / damb\u0131l']].map(([k,l])=>`<button class="chip${cx.e===k?' on':''}" data-a="cxe" data-v="${k}">${l}</button>`).join('')}</div><div class="cbtns"><button class="btn" data-a="cxsave">Hareketi kaydet</button></div></div>`:'<button class="btn ghost" data-a="cxopen">+ Kendi hareketini ekle</button>'}`;}
+function bodyTrack(){
+  const wl=S.wlog.slice().sort((a,b)=>new Date(a.date)-new Date(b.date)),lw=lastWeight(),wd=wDraft==null?lw:wDraft,first=wl[0],ch=first?Math.round((lw-first.v)*10)/10:0;
+  const ms=S.meas.slice().sort((a,b)=>new Date(a.date)-new Date(b.date)),m0=ms[0],m1=ms[ms.length-1],ph=S.photos;
+  return `${subSeg('vsub',vSub,[['kilo','Kilo'],['olcu','Ölçüler'],['foto','Fotoğraflar']])}${vSub==='kilo'?`<div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(lw)} kg</b><span>Kilo, son ölçüm ${wl.length?fmtDate(wl[wl.length-1].date):''}</span></div>${wl.length>1?`<div class="neutral">${ch>0?'+':ch<0?'−':''}${fmtKg(Math.abs(ch))} kg<span>${fmtDate(first.date)} tarihinden beri</span></div>`:''}</div>${lineChart(wl.map(x=>({date:x.date,v:x.v})),'kg','Kilo grafiği')}</div>
+  <div class="list" style="margin-top:10px"><div class="row"><span>Bugünkü kilon</span><div class="stepper small"><button data-a="wl" data-d="-1" aria-label="Kiloyu azalt">−</button><input data-c="wl" value="${fmtKg(wd)}" inputmode="decimal" aria-label="Bugünkü kilo"><button data-a="wl" data-d="1" aria-label="Kiloyu artır">+</button></div></div></div>
+  <button class="btn" data-a="wlsave" style="margin-top:8px">Kiloyu kaydet</button>
+  `:vSub==='olcu'?`
+  <div class="list" style="margin-top:10px">${m1?Object.keys(MEASN).map(k=>{const d=m0&&m0!==m1?Math.round((m1[k]-m0[k])*10)/10:0;return `<div class="row"><span>${MEASN[k]}<small>${fmtDate(m1.date)}</small></span><span class="v">${fmtKg(m1[k])} cm${d?`<small>${d>0?'+':'−'}${fmtKg(Math.abs(d))} cm, ${fmtDate(m0.date)} tarihinden beri</small>`:''}</span></div>`;}).join(''):'<p class="empty">Henüz ölçü yok.</p>'}</div>
+  <button class="btn ghost" data-a="msopen" style="margin-top:8px">+ Ölçü ekle</button>`:`${isPro()?'':'<button class="sugg lockt" data-a="paywall" data-v="photo"><b>Fotoğraflarla değişimini gör ★</b><span>İlk ve son fotoğrafını yan yana karşılaştır. Premium özelliği.</span></button>'}
+  ${isPro()&&ph.length>=2?`<div class="cmp"><figure><img src="${ph[0].src}" alt="İlk fotoğraf"><figcaption>${fmtDate(ph[0].date)}</figcaption></figure><figure><img src="${ph[ph.length-1].src}" alt="Son fotoğraf"><figcaption>${fmtDate(ph[ph.length-1].date)}</figcaption></figure></div>`:''}
+  <div class="phgrid"${isPro()?'':' hidden'}>${ph.map((p,i)=>`<div class="ph"><img src="${p.src}" alt="${fmtDate(p.date)} fotoğrafı"><span>${fmtDate(p.date)}</span><button class="phx" data-a="phdel" data-i="${i}" aria-label="Fotoğrafı sil">×</button></div>`).join('')}<label class="ph add"><input type="file" accept="image/*" data-c="photo" class="sr"><span>+ Fotoğraf ekle</span></label></div>
+  <p class="note">Fotoğraflar yalnızca bu cihazda saklanır, hiçbir yere gönderilmez. İlk ve son fotoğrafın yan yana gösterilir.</p>`}`;
+}
 function calView(){const b=new Date();b.setDate(1);b.setMonth(b.getMonth()+calM);b.setHours(0,0,0,0);const y=b.getFullYear(),mo=b.getMonth(),nd=new Date(y,mo+1,0).getDate(),off=(b.getDay()+6)%7,todayK=dk(new Date());
   const byDay={};S.workouts.forEach(w=>{const k=dk(w.date);(byDay[k]=byDay[k]||[]).push(w);});const inM=S.workouts.filter(w=>{const d=new Date(w.date);return d.getFullYear()===y&&d.getMonth()===mo;});
   let cells='';for(let i=0;i<off;i++)cells+='<span class="cd empty"></span>';for(let d=1;d<=nd;d++){const k=dk(new Date(y,mo,d)),ws=byDay[k];cells+=ws?`<button class="cd has${k===todayK?' today':''}" data-a="calday" data-v="${k}" aria-label="${d} ${AYLAR[mo]}, ${ws.length} antrenman">${d}<i></i></button>`:`<span class="cd${k===todayK?' today':''}">${d}</span>`;}
-  return `${heatmap()}<div class="calhead"><button class="x" data-a="calprev" aria-label="\u00d6nceki ay">\u2039</button><b>${AYLAR[mo]} ${y}</b><button class="x" data-a="calnext" aria-label="Sonraki ay"${calM>=0?' disabled':''}>\u203a</button></div>
-  <div class="chartbox"><div class="calgrid">${DAYS.map(d=>`<span class="cdh">${d}</span>`).join('')}${cells}</div></div>
-  <div class="stats"><div class="stat"><b>${inM.length}</b><span>Antrenman bu ay</span></div><div class="stat"><b>${fmtVol(inM.reduce((a,w)=>a+volume(w),0))}</b><span>Toplam kald\u0131r\u0131lan</span></div></div><p class="note">Antrenman yapt\u0131\u011f\u0131n bir g\u00fcne dokun, ayr\u0131nt\u0131s\u0131n\u0131 g\u00f6r.</p>`;}
+  return `${subSeg('calsub',calSub,[['ay','Ay'],['yil','Son 16 hafta']])}${calSub==='yil'?heatmap():`<div class="calhead"><button class="x" data-a="calprev" aria-label="\u00d6nceki ay">\u2039</button><b>${AYLAR[mo]} ${y}</b><button class="x" data-a="calnext" aria-label="Sonraki ay"${calM>=0?' disabled':''}>\u203a</button></div>
+  <div class="chartbox"><div class="calgrid">${DAYS.map(d=>`<span class="cdh">${d}</span>`).join('')}${cells}</div></div>`}
+  <div class="stats"><div class="stat"><b>${inM.length}</b><span>Antrenman bu ay</span></div><div class="stat"><b>${fmtVol(inM.reduce((a,w)=>a+volume(w),0))}</b><span>Toplam kald\u0131r\u0131lan</span></div></div>`;}
 function calDayModal(k){const ws=S.workouts.filter(w=>dk(w.date)===k);if(!ws.length)return '';const d=new Date(ws[0].date);
   return `<div class="card-top"><h3>${d.getDate()} ${AYLAR[d.getMonth()]}</h3><button class="x" data-a="closemodal" aria-label="Kapat">\u00d7</button></div>${ws.map(w=>`<div class="calw"><p class="sub" style="margin:0 0 6px">${esc(w.title||'Antrenman')}, saat ${String(new Date(w.date).getHours()).padStart(2,'0')}:${String(new Date(w.date).getMinutes()).padStart(2,'0')}, ${w.dur} dakika, ${fmtVol(volume(w))}</p><div class="list">${w.ex.map(e=>`<div class="row"><span>${nmH(e.n)}<small>${e.sets.map(s=>(s.kg?fmtKg(s.kg)+'\u00d7':'')+s.reps+(s.rpe?' @'+s.rpe:'')).join(', ')}</small></span></div>`).join('')}</div><button class="linkbtn" style="color:var(--red)" data-a="wdel" data-v="${w.id}">${armed==='wdel'+w.id?'Emin misin? Tekrar dokun':'Bu antrenman\u0131 sil'}</button></div>`).join('')}`;}
 async function exportCsv(){if(!isPro()){payNext='csv';showModal(paywall('csv'));return;}try{const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;if(!dl){toast('D\u0131\u015fa aktarma bu g\u00f6r\u00fcn\u00fcmde kullan\u0131lam\u0131yor');return;}
@@ -2959,11 +3008,11 @@ const VIEWS={home,workout,progress,profile,coach};
 function render(){
   applyTheme();
   const nav=document.querySelector('nav.tabs');
-  document.body.classList.toggle('onbm',!S.onb);
+  document.body.classList.toggle('onbm',!S.onb);document.body.classList.toggle('tc',S.onb&&tab==='coach');
   if(!S.onb){nav.hidden=true;$('view').innerHTML=onboarding();renderRest();startFigs();return;}
   nav.hidden=false;
   curSet=null;if(S.active){for(let i=0;i<S.active.ex.length&&!curSet;i++){const j=S.active.ex[i].sets.findIndex(x=>!x.done);if(j>=0)curSet={i,j};}}
-  keepAwake(!!S.active);if(tourI>=0)setTimeout(tourPos,30);if(profSec&&tab==='profile'&&!$('modal').hidden){const sc=document.querySelector('.sheet'),tp=sc?sc.scrollTop:0;showModal(profSecHtml(profSec));const s2=document.querySelector('.sheet');if(s2)s2.scrollTop=tp;}setTimeout(startFigs,0);
+  keepAwake(!!S.active);if(tourI>=0)setTimeout(tourPos,30);if(tab==='coach'){const cc=document.getElementById('chat');if(cc)cc.scrollTop=cc.scrollHeight;}if(profSec&&tab==='profile'&&!$('modal').hidden){const sc=document.querySelector('.sheet'),tp=sc?sc.scrollTop:0;showModal(profSecHtml(profSec));const s2=document.querySelector('.sheet');if(s2)s2.scrollTop=tp;}setTimeout(startFigs,0);
   $('view').innerHTML=(S.active&&tab==='workout'?'':`<button class="helpbtn" data-a="help" aria-label="Bu ekran ne işe yarar?">?</button>`)+VIEWS[tab]();
   if(document.querySelector('.stage3d'))mount3d();
   if(!stageRaf&&document.querySelector('.stage'))stageRaf=requestAnimationFrame(stageLoop);
@@ -3030,6 +3079,9 @@ function act(a,d){
     case 'seed':arm('seed',()=>{const keep={};['onb','prog','user','pro','seen','tourDone','visits','theme','simple','customEx','chat','rem','body','goal'].forEach(k=>{if(S[k]!==undefined)keep[k]=S[k];});S=Object.assign(seed(),keep);fillDefaults();restEnd=0;save();toast('Örnek veriler yüklendi');});return;
     case 'wipe':arm('wipe',()=>{profSec=null;closeModal();ob.step=0;tab='home';S={workouts:[],goal:S.goal,rem:S.rem,active:null};restEnd=0;save();toast('Tüm veriler silindi');});return;
     case 'closemodal':profSec=null;closeModal();return;
+    case 'chartsub':chartSub=d.v;render();return;
+    case 'vsub':vSub=d.v;render();return;
+    case 'calsub':calSub=d.v;render();return;
     case 'recall':recAll=!recAll;render();return;
     case 'psec':profSec=d.v;showModal(profSecHtml(d.v));return;
     case 'pswitch':{const k=+d.i,np=S.progs[k];S.progs.splice(k,1,S.prog);S.prog=np;toast('“'+np.name+'” programına geçildi');break;}
@@ -3156,6 +3208,7 @@ document.addEventListener('input',e=>{const t=e.target,c=t.dataset&&t.dataset.c;
 document.addEventListener('change',e=>{
   const t=e.target,c=t.dataset.c;if(!c)return;
   if(c==='vidup'){uploadVid(t);return;}
+  if(c==='regsel'){selReg=t.value;bubbleOn=true;render();return;}
   if(c==='pex'){progEx=t.value;render();return;}
   if(c==='kocurl'){S.kocUrl=t.value.trim();save();toast(S.kocUrl?'Koç.ai sunucusu kaydedildi':'Koç.ai sunucusu kaldırıldı');return;}
   if(c==='photo'){addPhoto(t.files&&t.files[0]);return;}
