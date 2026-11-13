@@ -1007,6 +1007,19 @@ details.steps[open] summary{margin-bottom:8px}
 .hero .heroan{top:10px;right:-18px;width:150px;height:170px}
 .hero .heroex{max-width:60%}
 @media (max-width:380px){.hero .heroan{width:128px;height:146px;right:-22px}}
+
+/* no horizontal scroll */
+*{scrollbar-width:none}*::-webkit-scrollbar{display:none;width:0;height:0}
+.chips{flex-wrap:wrap;overflow-x:visible;padding:2px 0 4px;margin:0}
+.chips.pseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:var(--surface);border-radius:14px;padding:4px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 6px 18px -6px rgba(16,24,40,.10)}
+.chips.pseg .chip{border:0;min-height:40px;padding:0 4px;font-size:15px;justify-content:center;border-radius:10px;background:transparent}
+.chips.pseg .chip.on{background:var(--accent);color:var(--on-accent)}
+.wins{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;overflow:visible;margin:0 0 14px;padding:0}
+.win{width:auto;min-height:78px;padding:12px;border-radius:16px}.win b{font-size:24px}.win span{font-size:11px}
+.exsel{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:14px;padding:6px 6px 6px 14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 6px 18px -6px rgba(16,24,40,.10)}
+.exsel span{font-size:13px;color:var(--muted);font-weight:600}
+.exsel select{flex:1;min-width:0;height:42px;border:0;border-radius:10px;background:var(--bg);color:var(--ink);font:600 16px 'Barlow',sans-serif;padding:0 10px}
+.qchips .chip{max-width:100%;white-space:normal;text-align:left;height:auto;min-height:38px;padding:6px 12px}
 </style>
 </head>
 <body>
@@ -1873,7 +1886,7 @@ function charts(){
   if(!names.length)return `<p class="empty">Antrenman kaydettikçe grafiklerin burada oluşacak.</p>`;
   if(!names.includes(progEx))progEx=names[0];
   const pts=exHistory(progEx),u=unit(progEx),first=pts[0].v,last=pts[pts.length-1].v,p=pctTxt(last,first),rec=records();
-  return `<div class="chips" role="group" aria-label="Hareket seç">${names.map(n=>`<button class="chip${n===progEx?' on':''}" data-a="prog" data-v="${n}" aria-pressed="${n===progEx}">${esc(trN(n))}</button>`).join('')}</div>
+  return `<label class="exsel"><span>Hareket</span><select data-c="pex" aria-label="Hareket seç">${names.map(n=>`<option value="${n}"${n===progEx?' selected':''}>${esc(nmT(n))}</option>`).join('')}</select></label>
   <div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(last)} ${u}</b><span>Son antrenmandaki en iyi set</span></div>${p&&pts.length>1?`<div class="${last>=first?'up':'down'}">${p}<span>ilk kayda göre</span></div>`:''}</div>${lineChart(pts,u)}</div>
   <h2>Haftalık hacim</h2><p class="sub">Her hafta kaldırdığın toplam ağırlık (kg × tekrar)</p><div class="chartbox">${bars()}</div>
   ${advHtml()}<h2>Kişisel rekorlar</h2><div class="list" style="margin-top:10px">${Object.keys(rec).slice(0,recAll?99:3).map(n=>`<div class="row"><span>${nmH(n)}<small>${fmtDate(rec[n].date)}${ratioTxt(n,rec[n].v)}</small></span><span class="v">${fmtKg(rec[n].v)} ${unit(n)}</span></div>`).join('')}</div>${Object.keys(rec).length>3?`<button class="linkbtn" data-a="recall">${recAll?'Daha az göster':'Tüm rekorları gör ('+Object.keys(rec).length+')'}</button>`:''}`;
@@ -2138,7 +2151,7 @@ function bodyView(){
   <button class="btn" data-a="regsheet" style="margin-top:14px">${REG[selReg].n} hareketlerini gör</button></div>`;
 }
 function progress(){
-  return `${heroProgress()}${infoCard('progress')}${winsHtml()}<div class="chips" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():plateauHtml()+charts()}`;
+  return `${heroProgress()}${infoCard('progress')}${winsHtml()}<div class="chips pseg" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():plateauHtml()+charts()}`;
 }
 function profileFull(){
   const r=S.rem,b=S.body;
@@ -2618,7 +2631,7 @@ function msgHtml(m){return m.role==='user'?`<div class="msg me">${esc(m.content)
 function coach(){const ch=S.chat||[];
   return `${heroCoach()}${infoCard('coach')}
   <div class="chat" id="chat">${ch.length?ch.map(msgHtml).join(''):`<div class="cempty">${LOGO}<p>Merhaba! Antrenmanlar\u0131na, rekorlar\u0131na ve kas haritana bakarak cevap veririm. A\u015fa\u011f\u0131dan bir soru se\u00e7 ya da kendin yaz.</p></div>`}</div>
-  <div class="chips qchips">${QP.map(q=>`<button class="chip" data-a="askcoach" data-v="${esc(q)}"${coachBusy?' disabled':''}>${esc(q)}</button>`).join('')}</div>
+  <div class="chips qchips">${QP.slice(0,4).map(q=>`<button class="chip" data-a="askcoach" data-v="${esc(q)}"${coachBusy?' disabled':''}>${esc(q)}</button>`).join('')}</div>
   ${quotaHtml()}<div class="cbar"><textarea data-c="cq" rows="1" placeholder="Ko\u00e7a bir \u015fey sor\u2026" aria-label="Ko\u00e7a mesaj">${esc(coachDraft)}</textarea><button class="small-btn" data-a="csend"${coachBusy?' disabled':''}>G\u00f6nder</button></div>
   ${ch.length?`<button class="linkbtn" data-a="cclear">${armed==='cclear'?'Emin misin? Tekrar dokun':'Sohbeti temizle'}</button>`:''}<p class="note">Ko\u00e7 yapay zek\u00e2d\u0131r, hata yapabilir ve t\u0131bbi tavsiye vermez; a\u011fr\u0131 ya da sakatl\u0131kta bir doktora veya fizyoterapiste dan\u0131\u015f.</p>`;}
 function coachCtx(){const b=S.body,ws=sorted(),rs=regionSets(),rl=regionLast(),rec=records(),now=Date.now();
@@ -2889,7 +2902,7 @@ function winsHtml(){const now=Date.now(),D=864e5,c=[],ws=sorted();const inR=(w,a
   const n30=ws.filter(w=>inR(w,30,0)).length;if(n30)c.push(['#22C1C3','#1F8A4C',`${n30}`,'antrenman, son 30 gün']);
   const pr30=prEvents().filter(p=>new Date(p.date).getTime()>now-30*D).length;if(pr30)c.push(['#F2B705','#E0701C',`${pr30}`,'yeni rekor, son 30 gün']);
   const k=streak();if(k)c.push(['#FF7EB3','#E0334A',`${k} hafta`,'haftalık hedef serisi']);
-  if(!c.length)return '';return `<div class="wins">${c.map(([a,b,v,t])=>`<div class="win" style="--a:${a};--b:${b}"><b class="num">${v}</b><span>${t}</span></div>`).join('')}</div>`;}
+  if(!c.length)return '';return `<div class="wins">${c.slice(0,3).map(([a,b,v,t])=>`<div class="win" style="--a:${a};--b:${b}"><b class="num">${v}</b><span>${t}</span></div>`).join('')}</div>`;}
 function heatmap(){const s0=sow(new Date()),start=new Date(s0);start.setDate(start.getDate()-7*15);const vol={};S.workouts.forEach(w=>{const k=dk(w.date);vol[k]=(vol[k]||0)+volume(w);});const mx=Math.max(1,...Object.values(vol));let cols='';
   for(let w=0;w<16;w++){let c='<div class="hmc">';for(let d=0;d<7;d++){const x=new Date(start);x.setDate(x.getDate()+w*7+d);const v=vol[dk(x)]||0,fut=x>new Date(),lv=v?Math.min(4,1+Math.floor(v/mx*3.99)):0;c+=`<i class="hl ${fut?'fut':'hl'+lv}" title="${fmtDate(x.toISOString())}"></i>`;}cols+=c+'</div>';}
   return `<div class="chartbox hm"><div class="hmh"><b>Son 16 hafta</b><span>${Object.keys(vol).length} antrenman günü</span></div><div class="hmg">${cols}</div><div class="hml"><span>Az</span><i class="hl1"></i><i class="hl2"></i><i class="hl3"></i><i class="hl4"></i><span>Çok</span></div></div>`;}
@@ -3134,6 +3147,7 @@ document.addEventListener('input',e=>{const t=e.target,c=t.dataset&&t.dataset.c;
 document.addEventListener('change',e=>{
   const t=e.target,c=t.dataset.c;if(!c)return;
   if(c==='vidup'){uploadVid(t);return;}
+  if(c==='pex'){progEx=t.value;render();return;}
   if(c==='kocurl'){S.kocUrl=t.value.trim();save();toast(S.kocUrl?'Koç.ai sunucusu kaydedildi':'Koç.ai sunucusu kaldırıldı');return;}
   if(c==='photo'){addPhoto(t.files&&t.files[0]);return;}
   if(c==='wl'){const v=parseFloat(String(t.value).replace(',','.'));if(!isNaN(v))wDraft=Math.min(300,Math.max(30,Math.round(v*10)/10));render();return;}
