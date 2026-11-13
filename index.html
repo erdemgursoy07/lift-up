@@ -2675,7 +2675,7 @@ const INFO={home:['Büyük karttaki butonla bugünkü antrenmanına başla.','Al
   profile:['Vücut bilgilerin, hedefin ve hatırlatmaların burada.','Seviyeni ve rozetlerini görebilirsin.','“Basit görünüm” ile gelişmiş seçenekleri gizleyebilirsin.']};
 const TITLES2={home:'Ana sayfa',workout:'Antrenman',progress:'İlerleme',coach:'Koç.ai',profile:'Profil'};
 function simple(){return S.simple!=null?S.simple:!!(S.prog&&S.prog.exp==='yeni');}
-function infoCard(t){S.seen=S.seen||{};if(S.seen[t]||!INFO[t]||((S.visits&&S.visits[t])||0)>3)return '';return `<div class="info" role="note"><span class="infoic" aria-hidden="true">i</span><div><b>${TITLES2[t]} ekranında neler var?</b><ul>${INFO[t].map(x=>`<li>${x}</li>`).join('')}</ul><button data-a="seen" data-v="${t}">Anladım</button></div></div>`;}
+function infoCard(t){return '';S.seen=S.seen||{};if(S.seen[t]||!INFO[t]||((S.visits&&S.visits[t])||0)>3)return '';return `<div class="info" role="note"><span class="infoic" aria-hidden="true">i</span><div><b>${TITLES2[t]} ekranında neler var?</b><ul>${INFO[t].map(x=>`<li>${x}</li>`).join('')}</ul><button data-a="seen" data-v="${t}">Anladım</button></div></div>`;}
 function exOpen(i){const A=S.active;if(A.open&&A.open[i]!==undefined)return A.open[i];return !!(curSet&&curSet.i===i);}
 function exMini(e,i){const dn=e.sets.filter(s=>s.done).length,tot=e.sets.length,all=tot>0&&dn===tot,nx=curSet&&curSet.i+1===i,s0=e.sets[0];
   return `<button class="exmini${all?' done':''}" data-a="exopen" data-i="${i}" aria-expanded="false"><span class="emck" aria-hidden="true">${all?'✓':i+1}</span>${thumb(e.n,'sm')}<span class="emn"><b>${nmH(e.n)}${nx?' <em>Sıradaki</em>':''}</b><small>${all?'Tamamlandı':dn?`${dn}/${tot} set yapıldı`:`${tot} set × ${s0?s0.reps:0} tekrar${s0&&s0.kg?', '+fmtKg(s0.kg)+' kg':''}`}</small></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>`;}
@@ -2706,7 +2706,7 @@ const TIPS2={home:['Sağ üstteki ? ile bu ekranın açıklamasını tekrar gör
   coach:['Koça “bugün yorgunum” de, sana kısa bir antrenman önersin.','Koç programını değiştirebilir; yaptığını ✓ ile gösterir.','Takıldığın hareketi sor, çözüm önersin.'],
   profile:['Basit görünüm, yeni başlayanlar için gelişmiş seçenekleri gizler.','Dinlenme süreni buradan değiştirebilirsin.','Antrenmanlarını Excel dosyası olarak indirebilirsin.']};
 let tipT=null;
-function showTip(t){const old=document.getElementById('tipbar');if(old)old.remove();clearTimeout(tipT);if(!S.onb||!TIPS2[t]||document.querySelector('.info'))return;S.tipI=S.tipI||{};const i=(S.tipI[t]||0)%TIPS2[t].length;S.tipI[t]=i+1;save();
+function showTip(t){const old=document.getElementById('tipbar');if(old)old.remove();clearTimeout(tipT);if(!S.onb||!TIPS2[t]||tourI>=0||!(S.seen&&S.seen[t]))return;S.tipI=S.tipI||{};const i=(S.tipI[t]||0)%TIPS2[t].length;S.tipI[t]=i+1;save();
   const el=document.createElement('button');el.id='tipbar';el.className='tipbar'+(restEnd&&S.active?' up':'');el.setAttribute('role','status');el.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span><b>İpucu</b> ${TIPS2[t][i]}</span>`;
   el.addEventListener('click',()=>{el.classList.add('out');setTimeout(()=>el.remove(),250);});document.body.appendChild(el);tipT=setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),300);},3600);}
 S.visits=S.visits||{};if(S.onb)S.visits[tab]=(S.visits[tab]||0)+1;
@@ -2788,7 +2788,7 @@ function proCard(){if(isPro()){const d=Math.max(1,Math.ceil((S.pro.until-Date.no
 function lockedCoach(){return `<h1>Koç</h1><div class="lockview"><div class="lockic">${LOGO}<span>★</span></div><h2>Kişisel yapay zekâ antrenörün</h2><p>Antrenmanlarını, rekorlarını ve kas haritanı bilen bir koçla konuş. Ağrın olduğunda alternatif hareket önerir, takıldığın yerde çözüm bulur, programını senin yerine düzenler.</p>
   <div class="lockdemo"><div class="msg me">Omzum ağrıyor, bugün ne yapayım?</div><div class="msg bot">Bugün omzu zorlayan omuz press’i çıkaralım; yerine bacak ve sırt ağırlıklı çalışalım. Ağrı sürerse bir fizyoterapiste görün.</div></div>
   <button class="herobtn" data-a="paywall" data-v="coach">7 gün ücretsiz dene</button></div>`;}
-const TOUR=[{sel:'.wohead',t:'Antrenman başladı',x:'Üstte süre ve kaç set yaptığın görünür. Hepsi bitince “Bitir”e basarsın.'},
+const WORKOUT_TOUR=[{sel:'.wohead',t:'Antrenman başladı',x:'Üstte süre ve kaç set yaptığın görünür. Hepsi bitince “Bitir”e basarsın.'},
   {sel:'.exb .pg',t:'Ağırlık hazır',x:'Ağırlıklar geçen seferine göre otomatik ayarlandı. Yeni bir harekette rahat kaldırabileceğin bir ağırlık seç.'},
   {sel:'.set.cur .stepper',t:'Ağırlığı ayarla',x:'− ve + ile 2,5 kg değiştir ya da sayıya dokunup yaz.'},
   {sel:'.set.cur .stepper ~ .stepper',t:'Tekrar sayısı',x:'Kaç tekrar yaptığını buradan girersin.'},
@@ -2796,9 +2796,9 @@ const TOUR=[{sel:'.wohead',t:'Antrenman başladı',x:'Üstte süre ve kaç set y
   {sel:'#rest .restpill',t:'Dinlenme sayacı',x:'Setler arasında dinlenmen için sayaç başladı. “Geç” ile atlayabilirsin.'},
   {sel:'.exmini',t:'Sıradaki hareketler',x:'Bir hareketin setleri bitince sıradaki kendiliğinden açılır. İstediğine dokunup açabilirsin.'},
   {sel:'.exb .exlink',t:'Nasıl yapılır?',x:'Hareketin adına dokunursan animasyonlu anlatımını görürsün. İyi antrenmanlar!'}];
-let tourI=-1;
-function tourStart(){tourI=-1;tourNext();}
-function tourEnd(){tourI=-1;S.tourDone=true;if(S.active)S.active.start=Date.now();document.querySelectorAll('.tour-target').forEach(x=>x.classList.remove('tour-target'));save();const el0=document.getElementById('elapsed');if(el0)el0.textContent='00:00';const o=document.getElementById('tour');if(o)o.remove();}
+let tourI=-1,TOUR=WORKOUT_TOUR;
+function tourStart(list){TOUR=list||WORKOUT_TOUR;tourI=-1;tourNext();}
+function tourEnd(){const wk=TOUR===WORKOUT_TOUR;tourI=-1;if(wk){S.tourDone=true;if(S.active)S.active.start=Date.now();}else{S.seen=S.seen||{};if(tourTab)S.seen[tourTab]=true;}document.querySelectorAll('.tour-target').forEach(x=>x.classList.remove('tour-target'));save();const el0=document.getElementById('elapsed');if(el0)el0.textContent='00:00';const o=document.getElementById('tour');if(o)o.remove();}
 function tourNext(){tourI++;while(tourI<TOUR.length&&!document.querySelector(TOUR[tourI].sel))tourI++;if(tourI>=TOUR.length){tourEnd();return;}
   const el=document.querySelector(TOUR[tourI].sel);if(el&&getComputedStyle(el).position!=='fixed')try{el.scrollIntoView({block:'center'});}catch(e){}setTimeout(tourPos,60);}
 function tourPos(){if(tourI<0)return;const st=TOUR[tourI],el=document.querySelector(st.sel);let o=document.getElementById('tour');if(!el){if(o)o.remove();return;}
@@ -2946,6 +2946,15 @@ async function gemFallback(bm,why){
   else bm.content=why==='out'?'Koç.ai bu sürümde kendi sunucusu üzerinden Gemini ile çalışır. Profil → Veriler → “Koç.ai sunucusu” alanına sunucunun adresini ekle.':'Koç.ai’a şu an bağlanılamadı. Sayfayı yenileyip tekrar dene.';
   coachBusy=false;S.chat=S.chat.slice(-40);save();render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
 }
+const SCREEN_TOURS={
+ home:[{sel:'.hero .herobtn',t:'Bugünkü antrenmanın',x:'Buna dokun; programdaki sıradaki gün ve ağırlıkların hazır gelir.'},{sel:'.tiles',t:'Seri, hedef, seviye',x:'Alev serini, ortadaki kutu bu haftaki hedefini gösterir. Seviyeye dokununca rozetlerin açılır.'},{sel:'.week',t:'Bu hafta',x:'Renkli günler antrenman yaptığın günler.'}],
+ workout:[{sel:'.day-card.next',t:'Sıradaki gün',x:'Çerçeveli kart sıradaki antrenmanın. Hangi günü yapacaksan ona dokun.'},{sel:'[data-a=pedit]',t:'Programı düzenle',x:'Hareket ekleyip çıkarabilir ya da programı baştan kurabilirsin.'},{sel:'.tools',t:'Araçlar',x:'Hareket kütüphanesi, 1RM ve plaka hesaplayıcı burada.'}],
+ progress:[{sel:'.pseg',t:'Görünümler',x:'Kaslar, grafikler, vücut ölçülerin ve takvim arasında geç.'},{sel:'.modeseg',t:'Harita modu',x:'Yoğunluk ne kadar çalıştığını, Toparlanma hangi kasın hazır olduğunu gösterir.'},{sel:'.figs',t:'Kas haritası',x:'Bir kasa dokun; ne kadar çalıştığını ve ona uygun hareketleri gör.'}],
+ coach:[{sel:'.qchips',t:'Hazır sorular',x:'Birine dokun ya da aşağıya kendi sorunu yaz.'},{sel:'.cbar',t:'Koç.ai’a yaz',x:'Programında değişiklik iste; Koç.ai kendisi uygular.'}],
+ profile:[{sel:'.procard',t:'Premium',x:'Sınırsız Koç.ai, 3D anatomi ve akıllı program burada.'},{sel:'.pmenu',t:'Ayarlar',x:'Vücut bilgilerin, hedefin, hatırlatmalar ve görünüm buradan değişir.'}]};
+let tourTab=null;
+if(S.onb)setTimeout(()=>screenTour(tab),2400);
+function screenTour(t,force){if(!SCREEN_TOURS[t]||tourI>=0)return;if(t==='workout'&&S.active)return;S.seen=S.seen||{};if(!force&&S.seen[t])return;tourTab=t;setTimeout(()=>{if(tab===t&&tourI<0){window.scrollTo(0,0);tourStart(SCREEN_TOURS[t]);}},force?50:600);}
 const VIEWS={home,workout,progress,profile,coach};
 function render(){
   applyTheme();
@@ -3003,7 +3012,7 @@ function finish(){
 function act(a,d){
   const i=+d.i,j=+d.j,A=S.active;
   switch(a){
-    case 'tab':tab=d.v;armed=null;bubbleOn=false;S.visits=S.visits||{};S.visits[tab]=(S.visits[tab]||0)+1;save();render();window.scrollTo(0,0);showTip(tab);{const v=$('view');v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');setTimeout(()=>v.classList.remove('enter'),900);}return;
+    case 'tab':tab=d.v;armed=null;bubbleOn=false;S.visits=S.visits||{};S.visits[tab]=(S.visits[tab]||0)+1;save();render();window.scrollTo(0,0);screenTour(tab);showTip(tab);{const v=$('view');v.classList.remove('enter');void v.offsetWidth;v.classList.add('enter');setTimeout(()=>v.classList.remove('enter'),900);}return;
     case 'start':startWorkout(d.v);return;
     case 'kg':{const s=A.ex[i].sets[j];s.kg=Math.max(0,Math.round((s.kg+2.5*(+d.d))*100)/100);try{navigator.vibrate&&navigator.vibrate(10);}catch(e){}break;}
     case 'reps':{const s=A.ex[i].sets[j];s.reps=Math.max(0,s.reps+(+d.d));break;}
@@ -3038,7 +3047,7 @@ function act(a,d){
     case 'pndur':ob.dur=+d.v;showModal(newProgModal());return;
     case 'pnavoid':{const k=ob.avoid.indexOf(d.v);if(k>=0)ob.avoid.splice(k,1);else ob.avoid.push(d.v);showModal(newProgModal());return;}
     case 'seen':S.seen=S.seen||{};S.seen[d.v]=true;break;
-    case 'help':S.seen=S.seen||{};S.seen[tab]=false;S.visits=S.visits||{};S.visits[tab]=1;render();window.scrollTo(0,0);return;
+    case 'help':if(tab==='workout'&&S.active){tourStart();return;}screenTour(tab,true);return;
     case 'exopen':A.open=A.open||{};A.open[i]=!exOpen(i);break;
     case 'simple':S.simple=!simple();toast(S.simple?'Basit görünüm açıldı':'Tüm seçenekler gösteriliyor');break;
     case 'gocal':tab='progress';pview='cal';calM=0;render();window.scrollTo(0,0);return;
@@ -3103,7 +3112,7 @@ function act(a,d){
     case 'obsignup':if(!ob.name.trim()){toast('Adını yaz');return;}if(!/^\S+@\S+\.\S+$/.test(ob.email.trim())){toast('Geçerli bir e-posta yaz');return;}S.user={name:ob.name.trim(),email:ob.email.trim(),via:'E-posta'};ob.step=8;save();render();window.scrollTo(0,0);return;
     case 'obsso':S.user={name:ob.name.trim()||'Sporcu',email:'',via:d.v};ob.step=8;save();render();toast(d.v+' ile giriş prototipte simüle edildi');return;
     case 'obskip':S.user=null;ob.step=8;save();render();return;
-    case 'obdone':S.prog=genProgram(ob.goal,ob.exp,ob.days,{place:ob.place,dur:ob.dur,avoid:ob.avoid});S.goal=ob.days;S.rem.days=REMD[ob.days].slice();S.onb=true;tab='home';progEdit=false;save();render();window.scrollTo(0,0);toast('Programın hazır, iyi antrenmanlar!');return;
+    case 'obdone':setTimeout(()=>screenTour('home'),900);S.prog=genProgram(ob.goal,ob.exp,ob.days,{place:ob.place,dur:ob.dur,avoid:ob.avoid});S.goal=ob.days;S.rem.days=REMD[ob.days].slice();S.onb=true;tab='home';progEdit=false;save();render();window.scrollTo(0,0);toast('Programın hazır, iyi antrenmanlar!');return;
     case 'reob':S.onb=false;ob.step=0;if(S.user){ob.name=S.user.name;ob.email=S.user.email;}if(S.prog){ob.goal=S.prog.goal;ob.exp=S.prog.exp||'orta';ob.days=S.prog.days.length;ob.place=S.prog.place||'gym';ob.dur=S.prog.dur||60;ob.avoid=(S.prog.avoid||[]).slice();}save();render();window.scrollTo(0,0);return;
     case 'startd':startDay(+d.v);return;
     case 'pedit':progEdit=!progEdit;render();return;
