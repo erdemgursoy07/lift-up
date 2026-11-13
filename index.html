@@ -996,6 +996,17 @@ details.steps[open] summary{margin-bottom:8px}
 .sptx b{display:block;font:700 44px/1 'Barlow Condensed',sans-serif;color:var(--ink)}
 .sptx span{color:var(--muted);font-size:15px}
 .sheet .cbtns .btn{font-size:16px;white-space:nowrap;padding-left:10px;padding-right:10px}
+
+/* QA fixes */
+.obtop{grid-template-columns:64px minmax(0,1fr) 44px}
+.obdots{min-width:0}.obdots i{flex:1 1 0;max-width:22px;min-width:6px}
+.exname .exnt{display:block;min-width:0}
+.exname .exnt>span{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.exname .exnt small{display:flex;flex-wrap:wrap}
+.row.exrow{gap:8px}.row.exrow .addbtn{flex:none}
+.hero .heroan{top:10px;right:-18px;width:150px;height:170px}
+.hero .heroex{max-width:60%}
+@media (max-width:380px){.hero .heroan{width:128px;height:146px;right:-22px}}
 </style>
 </head>
 <body>
@@ -2568,7 +2579,7 @@ function sideList(w,bar){const P=[25,20,15,10,5,2.5,1.25];let side=(w-bar)/2;con
 function ormModal(){const r=orm.r,kg=orm.kg,est=r===1?kg:(kg*(1+r/30)+kg*36/(37-r))/2,P=[[100,1],[95,2],[90,4],[85,6],[80,8],[75,10],[70,12],[65,15],[60,18]];
   const recs=Object.entries(records()).filter(([n])=>meta(n).bar).slice(0,5);
   return `<div class="card-top"><h3>1RM hesaplay\u0131c\u0131</h3><button class="x" data-a="closemodal" aria-label="Kapat">\u00d7</button></div><p class="sub" style="margin:0">Kald\u0131rd\u0131\u011f\u0131n a\u011f\u0131rl\u0131k ve tekrardan tek tekrarda kald\u0131rabilece\u011fin en fazla a\u011f\u0131rl\u0131\u011f\u0131 tahmin eder.</p>
-  ${recs.length?`<div class="chips wrap" style="margin-top:10px">${recs.map(([n])=>`<button class="chip" data-a="ormfill" data-v="${n}">${n}</button>`).join('')}</div>`:''}
+  ${recs.length?`<div class="chips wrap" style="margin-top:10px">${recs.map(([n])=>`<button class="chip" data-a="ormfill" data-v="${n}">${esc(trN(n))}</button>`).join('')}</div>`:''}
   <div class="list" style="margin-top:10px"><div class="row"><span>A\u011f\u0131rl\u0131k</span><div class="ms"><button data-a="ormk" data-d="-1" aria-label="Azalt">\u2212</button><b>${fmtKg(kg)} kg</b><button data-a="ormk" data-d="1" aria-label="Art\u0131r">+</button></div></div><div class="row"><span>Tekrar</span><div class="ms"><button data-a="ormr" data-d="-1" aria-label="Azalt">\u2212</button><b>${r}</b><button data-a="ormr" data-d="1" aria-label="Art\u0131r">+</button></div></div></div>
   <div class="ormbig"><span>Tahmini 1RM</span><b class="num">${fmtKg(Math.round(est*2)/2)} kg</b></div>
   <div class="list">${P.map(([p,rr])=>`<div class="row"><span>%${p}<small>yakla\u015f\u0131k ${rr} tekrar</small></span><span class="v">${fmtKg(r25(est*p/100))} kg</span></div>`).join('')}</div>
@@ -2965,7 +2976,7 @@ function act(a,d){
     case 'remon':S.rem.on=!S.rem.on;toast(S.rem.on?'Hatırlatmalar açıldı':'Hatırlatmalar kapatıldı');break;
     case 'day':{const v=+d.v,k=S.rem.days.indexOf(v);if(k>=0)S.rem.days.splice(k,1);else S.rem.days.push(v);S.rem.days.sort((x,y)=>x-y);break;}
     case 'seed':arm('seed',()=>{const keep={};['onb','prog','user','pro','seen','tourDone','visits','theme','simple','customEx','chat','rem','body','goal'].forEach(k=>{if(S[k]!==undefined)keep[k]=S[k];});S=Object.assign(seed(),keep);fillDefaults();restEnd=0;save();toast('Örnek veriler yüklendi');});return;
-    case 'wipe':arm('wipe',()=>{S={workouts:[],goal:S.goal,rem:S.rem,active:null};restEnd=0;save();toast('Tüm veriler silindi');});return;
+    case 'wipe':arm('wipe',()=>{profSec=null;closeModal();ob.step=0;tab='home';S={workouts:[],goal:S.goal,rem:S.rem,active:null};restEnd=0;save();toast('Tüm veriler silindi');});return;
     case 'closemodal':profSec=null;closeModal();return;
     case 'recall':recAll=!recAll;render();return;
     case 'psec':profSec=d.v;showModal(profSecHtml(d.v));return;
