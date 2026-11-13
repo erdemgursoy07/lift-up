@@ -1129,6 +1129,66 @@ body[data-dp=gece] .hero{background:linear-gradient(145deg,#2B3A8C,#141E30);box-
 .pmenu .prow2{min-height:48px;padding:6px 14px}.pmenu .pic{width:32px;height:32px}
 .win{min-height:56px;padding:9px}.win b{font-size:20px}
 .subseg{margin-bottom:8px}.exsel{margin-bottom:8px}.wins{margin-bottom:10px}
+
+/* fit to iPhone */
+html,body{overscroll-behavior:none}
+body.tc #view{height:calc(100dvh - env(safe-area-inset-top,0px))}
+.s3d .stage3d{height:clamp(240px,calc(100dvh - 440px),420px)}
+.ctl3d{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px}
+.ctl3d button{min-height:36px;padding:0 4px;font-size:13px;white-space:nowrap}
+.credit3d{font-size:9.5px;line-height:1.3;margin:6px 0 0;opacity:.75}
+.bodybox .legend{margin-top:4px}
+.bodybox .figs svg{max-height:min(300px,calc(100dvh - 470px))}
+.procard{padding:8px 12px}.procard span:not(.crown){font-size:12px}
+.iconbtn{flex:none;width:44px;height:44px;margin-right:6px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iconbtn svg{width:20px;height:20px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round}
+.progsum{display:flex;align-items:center}.progsum>div:first-child{flex:1;min-width:0}
+.sugr{margin-top:2px}
+
+.s3d .stage3d{height:clamp(230px,calc(100dvh - 535px),420px)}
+.pmenu .prow2{min-height:46px;padding:5px 14px}.pmenu .ptx small{font-size:12px}
+.thero{padding:10px 16px}.thstats{margin-top:4px}
+.tiles .tile{padding:8px 12px}.week{margin:8px 0}
+.hero{padding:12px 16px}
+.s3d .stage3d{height:clamp(260px,calc(100dvh - 470px),440px)}
+
+/* alt bar A + 3D ipucu */
+nav.tabs .in{padding:2px 4px calc(env(safe-area-inset-bottom,0px) + 2px)}
+.tab{padding:2px 0 3px;gap:0;font-size:11px;min-height:0}
+.tab svg{width:22px;height:22px;padding:2px 12px}
+.app{padding-bottom:76px}
+#rest{bottom:calc(env(safe-area-inset-bottom,0px) + 58px)}
+.tipbar{bottom:calc(env(safe-area-inset-bottom,0px) + 62px)}
+.tipbar.up{bottom:calc(env(safe-area-inset-bottom,0px) + 124px)}
+body.tc #view{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 60px)}
+.s3d .stage3d{height:clamp(260px,calc(100dvh - 455px),440px)}
+.s3d .stagehud{top:12px;bottom:12px;align-items:flex-start}
+.stagehud .draghint{position:absolute;left:50%;bottom:0;top:auto;transform:translateX(-50%);white-space:nowrap;opacity:1;animation:hintout .6s 3s forwards;background:rgba(0,0,0,.35);padding:4px 10px;border-radius:999px}
+.stage.dragged .draghint{animation:none;opacity:0}
+@keyframes hintout{to{opacity:0}}
+
+.recsim.compact{padding:10px 12px;margin-top:8px}.recsim.compact input[type=range]{height:24px}
+.recmode .bodybox .figs svg{max-height:min(260px,calc(100dvh - 560px))}
+.calgrid .cd{min-height:31px}.cal .stat,.stats .stat{padding:8px 12px}
+.recmode .bodybox .figs svg{max-height:min(250px,calc(100dvh - 580px))}
+.calgrid .cd{min-height:29px}.calhead{margin:2px 0}
+.calgrid{row-gap:2px}.calgrid .cd{min-height:27px}.cal .chartbox,.calgrid{padding-top:6px;padding-bottom:6px}.stats{margin-top:8px}
+
+.chips.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.chips.grid3 .chip{justify-content:center;padding:0 6px}
+.lockr{box-shadow:inset 0 0 0 1.5px #7A4BF0}.lockr .wri{background:rgba(122,75,240,.14)}.lockr .wri svg{stroke:#7A4BF0}
+.sugmodal{display:flex;flex-direction:column;gap:10px}
+.sugmodal .sugg{border:0;box-shadow:none;background:var(--bg);border-radius:16px;padding:12px 14px 12px 52px;position:relative;margin:0}
+.sugmodal .sugg::before{content:'';position:absolute;left:12px;top:12px;width:30px;height:30px;border-radius:9px;background:color-mix(in srgb,#F2B705 22%,transparent)}
+.sugmodal .sugg:not(.pl)::before{background:color-mix(in srgb,#2E9E4F 22%,transparent)}
+.sugmodal .sugg b{font-size:15px}.sugmodal .sugg span{font-size:13px}
+.sugmodal .sbtns{margin-top:8px;gap:6px}.sugmodal .sbtns button{min-height:34px;font-size:13px;padding:0 10px}
+.modecap{margin:6px 2px 8px;font-size:12.5px;color:var(--muted);text-align:center}
+
+.bkrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.bkrow .btn{margin:0;font-size:15px;padding:0 8px}
+.bkup{display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modecap{margin:4px 2px 6px;font-size:12px;line-height:1.3}
+.s3d .stage3d{height:clamp(250px,calc(100dvh - 482px),440px)}
+.recmode .bodybox .figs svg{max-height:min(240px,calc(100dvh - 600px))}
 </style>
 </head>
 <body>
@@ -2256,15 +2316,12 @@ function regSheet(){
 function bodyView(){
   const real=regionSets(),keys=Object.keys(REG),weak=keys.slice().sort((a,b)=>real[a]-real[b])[0],rec=mapMode==='rec',rs=rec?recRs():real;
   if(!selReg)selReg=weak;
-  return `<div class="${rec?'recmode':''}"><div class="modeseg" role="group" aria-label="Harita modu"><button class="${mapMode==='vol'?'on':''}" data-a="mapmode" data-v="vol" aria-pressed="${mapMode==='vol'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Yoğunluk</button><button class="${rec?'on':''}" data-a="mapmode" data-v="rec" aria-pressed="${rec}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/></svg>Toparlanma</button><button class="${mapMode==='3d'?'on':''}" data-a="mapmode" data-v="3d" aria-pressed="${mapMode==='3d'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>3D${isPro()?'':'<i class="prolock">★</i>'}</button></div><div class="chartbox bodybox">${!rec&&mapMode!=='3d'?'<button class="tmplay" data-a="tmplay" aria-label="Zaman yolculuğu: son 12 haftayı oynat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span id="tmlab" class="tmlab" hidden></span>':''}${mapMode==='3d'?spin3d(rs)+'<p class="avnote">Model, son 3 ayda en çok çalıştırdığın kaslarda hafifçe büyür.</p>':`<div class="figs" id="figswrap">${figWithBubble('front',rs)}${figWithBubble('back',rs)}</div>`}
+  return `<div class="${rec?'recmode':''}"><div class="modeseg" role="group" aria-label="Harita modu"><button class="${mapMode==='vol'?'on':''}" data-a="mapmode" data-v="vol" aria-pressed="${mapMode==='vol'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Yoğunluk</button><button class="${rec?'on':''}" data-a="mapmode" data-v="rec" aria-pressed="${rec}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/></svg>Toparlanma</button><button class="${mapMode==='3d'?'on':''}" data-a="mapmode" data-v="3d" aria-pressed="${mapMode==='3d'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>3D${isPro()?'':'<i class="prolock">★</i>'}</button></div><p class="modecap">${{vol:'Son 30 günde her kasa kaç set yaptığın',rec:'Hangi kasın bugün çalışmaya hazır olduğu',['3d']:'Gerçek anatomik model; çevir ve bir kasa dokun'}[mapMode]}</p><div class="chartbox bodybox">${!rec&&mapMode!=='3d'?'<button class="tmplay" data-a="tmplay" aria-label="Zaman yolculuğu: son 12 haftayı oynat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span id="tmlab" class="tmlab" hidden></span>':''}${mapMode==='3d'?spin3d(rs):`<div class="figs" id="figswrap">${figWithBubble('front',rs)}${figWithBubble('back',rs)}</div>`}
   ${rec?'<div class="legend" aria-hidden="true"><span><i class="lgr3"></i>Dinleniyor</span><span><i class="lgr1"></i>Toparlanıyor</span><span><i class="lgr0"></i>Hazır</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Son 48 saatte çalışılan kaslar dinleniyor; yeşil olanları bugün rahatça çalıştırabilirsin.</p></div>':'<div class="legend" aria-hidden="true"><span>Az</span><i class="lg0"></i><i class="lg1"></i><i class="lg2"></i><i class="lg3"></i><span>Çok</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Renkler son 30 günde her bölgeye yaptığın set sayısı. Bir kasa dokun, özeti yanında açılır.</p></div>'}
-  <label class="exsel regsel"><span>Kas grubu</span><select data-c="regsel" aria-label="Kas grubu seç">${keys.map(k=>`<option value="${k}"${k===selReg?' selected':''}>${REG[k].n}${rec?'':' ('+rs[k]+' set)'}</option>`).join('')}</select></label>
-  ${!rec&&selReg!==weak?`<button class="weak" data-a="reg" data-v="${weak}"><span>En az çalıştırdığın bölge</span><b>${REG[weak].n} bölgesini seç</b></button>`:''}
-  ${rec?recPanel():''}
-  <button class="btn" data-a="regsheet" style="margin-top:14px">${REG[selReg].n} hareketlerini gör</button></div>`;
+  ${rec?recPanel():''}</div>`;
 }
 function progress(){
-  return `${heroProgress()}${infoCard('progress')}${pview==='charts'?winsHtml():''}<div class="chips pseg" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():(chartSub==='guc'?plateauHtml():'')+charts()}`;
+  return `${heroProgress()}${infoCard('progress')}${pview==='charts'?winsHtml():''}<div class="chips pseg" role="group" aria-label="İlerleme görünümü" style="margin-bottom:12px"><button class="chip${pview==='body'?' on':''}" data-a="pview" data-v="body" aria-pressed="${pview==='body'}">Kaslar</button><button class="chip${pview==='charts'?' on':''}" data-a="pview" data-v="charts" aria-pressed="${pview==='charts'}">Grafikler</button><button class="chip${pview==='vucut'?' on':''}" data-a="pview" data-v="vucut" aria-pressed="${pview==='vucut'}">Vücut</button><button class="chip${pview==='cal'?' on':''}" data-a="pview" data-v="cal" aria-pressed="${pview==='cal'}">Takvim</button></div>${pview==='body'?bodyView():pview==='vucut'?bodyTrack():pview==='cal'?calView():charts()}`;
 }
 function profileFull(){
   const r=S.rem,b=S.body;
@@ -2285,7 +2342,7 @@ function profileFull(){
   <p class="note">${sum}</p>
   <h2>Takviyeler</h2>${suppHtml()}
   ${settingsHtml()}
-  <h2>Veriler</h2><label class="fld" style="margin-top:10px"><span>Koç.ai sunucusu (GitHub ve telefon sürümü için)</span><input data-c="kocurl" value="${esc(S.kocUrl||'')}" placeholder="https://lift-up-koc.hesabin.workers.dev" inputmode="url" autocomplete="off"></label><p class="note" style="margin:0 0 8px">claude.ai’da açıldığında Koç.ai bunu kullanmaz, doğrudan Claude ile çalışır.</p>
+  <h2>Veriler</h2><div class="bkrow"><button class="btn ghost" data-a="bkdown">Yedeği indir</button><label class="btn ghost bkup">Yedeği geri yükle<input type="file" accept="application/json,.json" data-c="bkup" class="sr"></label></div><p class="note" style="margin:4px 0 10px">Verilerin sadece bu telefonda duruyor. Telefon değiştirmeden önce yedeği indir, yeni telefonda geri yükle.</p><label class="fld" style="margin-top:10px"><span>Koç.ai sunucusu (GitHub ve telefon sürümü için)</span><input data-c="kocurl" value="${esc(S.kocUrl||'')}" placeholder="https://lift-up-koc.hesabin.workers.dev" inputmode="url" autocomplete="off"></label><p class="note" style="margin:0 0 8px">claude.ai’da açıldığında Koç.ai bunu kullanmaz, doğrudan Claude ile çalışır.</p>
   <button class="btn ghost" data-a="seed">${armed==='seed'?'Emin misin? Tekrar dokun':'Örnek verileri yeniden yükle'}</button>
   <button class="btn ghost danger" data-a="wipe">${armed==='wipe'?'Emin misin? Tekrar dokun':'Tüm verileri sil'}</button>
   <p class="note">Lift-Up, Faz 1 prototipi. Veriler yalnızca bu tarayıcıda saklanır.</p>`;
@@ -2311,8 +2368,8 @@ function planView(){
   const dayCard=(d,i)=>`<button class="tpl day-card${i===p.next?' next':''}" data-a="startd" data-v="${i}" style="--dc:${DCOL[i%DCOL.length]}"><span class="dnum num">${i+1}</span>${i===p.next?'<em class="badge">Sıradaki</em>':''}<b>${esc(d.name)}</b>${d.tag?`<em class="dtag">${d.tag}</em>`:''}<span class="dthumbs">${d.ex.slice(0,6).map(x=>thumb(x.n,'sm')).join('')}</span><small class="dmeta">${d.ex.length} hareket, yaklaşık ${Math.max(10,Math.round(d.ex.reduce((a,x)=>a+x.sets*2.5,0)/5)*5)} dakika</small></button>`;
   const editDay=(d,i)=>`<section class="pday"><input class="pdname" data-c="pdname" data-i="${i}" value="${esc(d.name)}" aria-label="Gün adı">${d.ex.map((x,j)=>`<div class="prow"><span class="pn">${nmH(x.n)}</span><div class="pst">${miniStep('ps',i,j,x.sets,'Set')}<span>×</span>${miniStep('pr',i,j,x.reps,'Tekrar')}</div><button class="x" data-a="pdel" data-i="${i}" data-j="${j}" aria-label="${x.n} hareketini kaldır">×</button></div>`).join('')}<select data-c="padd" data-i="${i}" aria-label="Hareket ekle"><option value="">+ Hareket ekle</option>${EX.filter(e=>!d.ex.some(x=>x.n===e.n)).map(e=>`<option value="${e.n}">${esc(nmT(e.n))}</option>`).join('')}</select></section>`;
   return `${heroWorkout()}${infoCard('workout')}${injBar()}
-  <div class="progsum"><div><span class="eb">Programın</span><b>${esc(p.name)}</b><span>${GOALS[p.goal].n}, haftada ${p.days.length} gün</span></div><button class="small-btn ghostb" data-a="pedit">${progEdit?'Bitti':'Düzenle'}</button></div>
-  ${savedProgs()}${progEdit?p.days.map(editDay).join('')+'<button class="btn ghost" data-a="pnew">Programı baştan oluştur</button><button class="btn ghost" data-a="start" data-v="0">+ Boş antrenman başlat</button>':'<div class="daygrid">'+p.days.map(dayCard).join('')+'</div>'}${progEdit?'':plateauHtml()+suggestHtml()}${toolsRow()}`;
+  <div class="progsum"><div><span class="eb">Programın</span><b>${esc(p.name)}</b><span>${GOALS[p.goal].n}, haftada ${p.days.length} gün</span></div><button class="iconbtn" data-a="lib" aria-label="Hareket kütüphanesi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h4v16h-4zM15 5l4-1 3 15-4 1z"/></svg></button><button class="small-btn ghostb" data-a="pedit">${progEdit?'Bitti':'Düzenle'}</button></div>
+  ${savedProgs()}${progEdit?p.days.map(editDay).join('')+'<button class="btn ghost" data-a="pnew">Programı baştan oluştur</button><button class="btn ghost" data-a="start" data-v="0">+ Boş antrenman başlat</button>':'<div class="daygrid">'+p.days.map(dayCard).join('')+'</div>'}${progEdit?'':sugRow()}`;
 }
 let mapMode='vol',wDraft=null,mDraft=null,lastSum=null;
 const BIGINC=['Squat','Deadlift','Romanian deadlift','Leg press','Hip thrust'];
@@ -2504,8 +2561,7 @@ function spin3dSvg(rs){
   const dust=[[10,7,0],[24,9,2],[38,6,4],[52,10,1],[66,8,3],[80,11,5],[90,7,6],[31,12,2.5],[72,9,4.5]].map(([l,du,dl])=>`<i style="left:${l}%;animation-duration:${du}s;animation-delay:-${dl}s"></i>`).join('');
   return `<div class="stage${stageDragged?' dragged':''}"><div class="spotlight"></div><div class="dust" aria-hidden="true">${dust}</div><div class="floor" aria-hidden="true"><i class="ring"></i><i class="ring r2"></i><i class="shadow3d"></i></div>
   <div class="spin3d"><div class="rot${rotAuto?' auto':''}"${rotAuto?'':` style="transform:rotateY(${rotY}deg)"`}><div class="face">${strip('front')}</div><div class="face backf">${strip('back')}</div></div></div>
-  <div class="stagehud" aria-hidden="true"><span class="sidepill">Önden</span><span class="draghint"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>Sürükle, çevir</span></div></div>
-  <div class="seg3d" role="group" aria-label="Görünüm">${[['0','Ön'],['180','Arka'],['auto','Otomatik']].map(([v,l])=>`<button class="${segV===v?'on':''}" data-a="rot" data-v="${v}" aria-pressed="${segV===v}">${l}</button>`).join('')}</div>`;
+  <div class="stagehud" aria-hidden="true"><span class="sidepill">Önden</span><span class="draghint"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>Sürükle, çevir</span></div></div>`;
 }
 const SO=[[100,8],[110,11],[116,20],[119,31],[116,40],[113,47],[108,52],[106,60],[110,68],[118,76],[121,90],[119,106],[114,114],[113,130],[114,150],[112,168],[110,184],[112,200],[114,214],[116,240],[115,266],[111,290],[108,304],[109,330],[107,360],[104,380],[104,390],[114,396],[117,404],[86,404],[86,393],[90,382],[88,362],[84,340],[85,320],[90,302],[88,286],[84,262],[83,240],[80,222],[76,206],[78,190],[84,176],[86,160],[84,140],[82,118],[82,96],[84,78],[90,66],[92,58],[88,48],[84,36],[84,22],[90,12]];
 const ARM=[[92,66],[108,64],[115,76],[114,100],[114,130],[112,150],[114,170],[113,200],[110,222],[112,236],[108,250],[100,250],[98,236],[98,222],[95,196],[93,170],[90,150],[89,120],[88,96],[88,80]];
@@ -2529,8 +2585,8 @@ let T3=null;
 function spin3d(rs){
   const dust=[[10,7,0],[24,9,2],[38,6,4],[52,10,1],[66,8,3],[80,11,5],[90,7,6],[31,12,2.5],[72,9,4.5]].map(([l,du,dl])=>`<i style="left:${l}%;animation-duration:${du}s;animation-delay:-${dl}s"></i>`).join('');
   return `<div class="stage s3d${stageDragged?' dragged':''}"><div class="spotlight"></div><div class="dust" aria-hidden="true">${dust}</div><div class="stage3d" role="img" aria-label="Döndürülebilir 3D kas haritası; kas seçmek için alttaki bölge çiplerini de kullanabilirsin"></div>
-  <div class="stagehud" aria-hidden="true"><span class="sidepill">Önden</span><span class="draghint"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>Sürükle, çevir; kasa dokun</span></div>${(()=>{const rr=regionSets();return `<div id="lab3d" class="lab3d" hidden><i class="ldot"></i><div class="lcard"><b>${REG[selReg].n}</b><span>${REGANAT[selReg]}</span><span>${rr[selReg]} set, son 30 gün</span><button data-a="regsheet">Hareketler ›</button></div></div>`;})()}</div><div class="ctl3d" role="group" aria-label="3D seçenekleri"><button data-a="z3d">Tüm vücut</button><button class="${heat3d?'on':''}" data-a="heat3d" aria-pressed="${heat3d}">Isı haritası</button><button class="${skin3d?'on':''}" data-a="skin3d" aria-pressed="${skin3d}">Deri</button></div><p class="credit3d">Anatomi: BodyParts3D © The Database Center for Life Science (CC BY 4.0); open-anatomy-3d tarafından uyarlandı (CC BY 4.0).</p>
-  <div class="seg3d" role="group" aria-label="Görünüm">${[['0','Ön'],['180','Arka'],['auto','Otomatik']].map(([v,l])=>`<button class="${segV===v?'on':''}" data-a="rot" data-v="${v}" aria-pressed="${segV===v}">${l}</button>`).join('')}</div>`;
+  <div class="stagehud" aria-hidden="true"><span class="sidepill">Önden</span><span class="draghint"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M3 12h18"/></svg>Sürükle, çevir; kasa dokun</span></div>${(()=>{const rr=regionSets();return `<div id="lab3d" class="lab3d" hidden><i class="ldot"></i><div class="lcard"><b>${REG[selReg].n}</b><span>${REGANAT[selReg]}</span><span>${rr[selReg]} set, son 30 gün</span><button data-a="regsheet">Hareketler ›</button></div></div>`;})()}</div><div class="ctl3d" role="group" aria-label="3D seçenekleri"><button data-a="z3d">Tüm vücut</button><button data-a="rotcycle">${segV==='0'?'Ön':segV==='180'?'Arka':'Otomatik'} ↻</button><button class="${heat3d?'on':''}" data-a="heat3d" aria-pressed="${heat3d}">Isı haritası</button><button class="${skin3d?'on':''}" data-a="skin3d" aria-pressed="${skin3d}">Deri</button></div><p class="credit3d">Anatomi: BodyParts3D © The Database Center for Life Science (CC BY 4.0); open-anatomy-3d tarafından uyarlandı (CC BY 4.0).</p>
+  `;
 }
 function build3dOld(){
   const TH=window.THREE,R=new TH.WebGLRenderer({antialias:true,alpha:true});
@@ -2771,7 +2827,7 @@ function coachTools(bm){const names=EX.map(e=>e.n),done=t=>{bm.acts.push(t);save
     {name:'hafif_hafta',description:'Bir hareket i\u00e7in bir sonraki antrenmanda a\u011f\u0131rl\u0131\u011f\u0131 %10 azaltan hafif hafta (deload) uygular.',inputSchema:{type:'object',properties:{hareket:{type:'string',enum:names}},required:['hareket']},execute:i=>{S.deload=S.deload||{};S.deload[i.hareket]=true;return done(`${i.hareket}: bir sonraki antrenmanda %10 hafif`);}},
     {name:'sakatlik_modu',description:'Kullanıcı diz, bel ya da omuzunda ağrı veya sakatlık bildirirse o bölgeyi zorlayan hareketleri belirtilen gün boyunca antrenmanlarda güvenli alternatiflerle değiştirir. Ciddi ya da geçmeyen ağrıda mutlaka doktora yönlendir.',inputSchema:{type:'object',properties:{bolge:{type:'string',enum:['diz','bel','omuz']},gun:{type:'integer',minimum:1,maximum:28}},required:['bolge']},execute:i=>{S.injury={area:i.bolge,until:Date.now()+(i.gun||7)*864e5};return done(`${INJN[i.bolge]} koruma modu: ${i.gun||7} gün`);}}];}
 function updLastBot(){const el=document.querySelector('#chat .msg.bot:last-child');const m=(S.chat||[]).slice(-1)[0];if(el&&m&&m.role==='assistant'){el.innerHTML=(m.content?md(m.content):'<span class="typing"><i></i><i></i><i></i></span>')+(m.acts||[]).map(a=>`<span class="act">\u2713 ${esc(a)}</span>`).join('');const r=el.getBoundingClientRect();if(r.bottom>window.innerHeight-170)window.scrollBy(0,r.bottom-window.innerHeight+190);}}
-async function sendCoach(q){q=String(q||'').trim();if(coachBusy||!q)return;if(!isPro()){if(coachLeft()<=0){payNext='coach';showModal(paywall('coach'));return;}const wk=sow(new Date()).getTime();if(!S.coachUse||S.coachUse.w!==wk)S.coachUse={w:wk,n:0};S.coachUse.n++;}S.chat=S.chat||[];S.chatAt=Date.now();S.chat.push({role:'user',content:q});coachDraft='';const bm={role:'assistant',content:'',acts:[]};S.chat.push(bm);coachBusy=true;tab='coach';render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
+async function sendCoach(q){q=String(q||'').trim();if(coachBusy||!q)return;if(coachLeft()<=0){toast('Bugünlük bu kadar; yarın devam edelim.');return;}{const d=dk(new Date());if(!S.coachDay||S.coachDay.d!==d)S.coachDay={d,n:0};S.coachDay.n++;}if(!isPro()){if(coachLeft()<=0){payNext='coach';showModal(paywall('coach'));return;}const wk=sow(new Date()).getTime();if(!S.coachUse||S.coachUse.w!==wk)S.coachUse={w:wk,n:0};S.coachUse.n++;}S.chat=S.chat||[];S.chatAt=Date.now();S.chat.push({role:'user',content:q});coachDraft='';const bm={role:'assistant',content:'',acts:[]};S.chat.push(bm);coachBusy=true;tab='coach';render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
   let smp=null,why='';try{if(!(window.claude&&window.claude.use))why='out';else smp=await window.claude.use('sample');}catch(e){why='err';}
   if(!smp){await gemFallback(bm,why);return;}
   const hist=S.chat.slice(0,-1).slice(-12);while(hist.length&&hist[0].role!=='user')hist.shift();
@@ -2856,16 +2912,16 @@ function genProgram(goal,exp,days,opt){
   return {name:sn,goal,exp,place,dur,avoid,days:ds,next:0};
 }
 function onboarding(){
-  const st=ob.step,first=(ob.name||'').trim().split(' ')[0],N=7;let c='';
-  if(st===0)c=eqCols()+`<div class="obwelcome"><svg class="obfig anim" viewBox="20 -14 160 168" aria-hidden="true"><g id="obanim"></g></svg>${LOGO}<h1 class="obbrand">Lift-Up</h1><p class="lead2">Her antrenmanda biraz daha ağır. Antrenmanlarını kaydet, ilerlemeni gör, hangi kası ihmal ettiğini bil.</p></div><button class="btn" data-a="obnext">Başlayalım</button><button class="btn ghost" data-a="obgo" data-v="7">Zaten hesabım var</button>`;
+  const st=ob.step,first=(ob.name||'').trim().split(' ')[0],N=6;let c='';
+  if(st===0)c=eqCols()+`<div class="obwelcome"><svg class="obfig anim" viewBox="20 -14 160 168" aria-hidden="true"><g id="obanim"></g></svg>${LOGO}<h1 class="obbrand">Lift-Up</h1><p class="lead2">Her antrenmanda biraz daha ağır. Antrenmanlarını kaydet, ilerlemeni gör, hangi kası ihmal ettiğini bil.</p></div><button class="btn" data-a="obnext">Başlayalım</button>`;
   else if(st===1)c=`<h1>Hedefin ne?</h1><p class="lead">Programını buna göre hazırlayacağız.</p>${Object.entries(GOALS).map(([k,g])=>optCardT('obgoal',k,g,ob.goal===k,GOALTH[k])).join('')}<button class="btn" data-a="obnext">Devam</button>`;
   else if(st===2)c=`<h1>Ne kadar deneyimlisin?</h1><p class="lead">Hareket seçimi ve set sayıları buna göre ayarlanır.</p>${Object.entries(EXPS).map(([k,g])=>optCard('obexp',k,g,ob.exp===k)).join('')}<button class="btn" data-a="obnext">Devam</button>`;
   else if(st===3)c=`<h1>Seni tanıyalım</h1><p class="lead">Güç oranların ve önerilerin için kullanılır.</p>${obBody()}<button class="btn" data-a="obnext" style="margin-top:16px">Devam</button>`;
   else if(st===4)c=`<h1>Haftada kaç gün?</h1><p class="lead">Gerçekçi ol: düzenli 3 gün, aksayan 6 günden iyidir.</p><div class="daypick">${[2,3,4,5,6].map(n=>`<button class="dp${ob.days===n?' on':''}" data-a="obdays" data-v="${n}" aria-pressed="${ob.days===n}">${n}<small>gün</small></button>`).join('')}</div><div class="splitnote"><b>${SPLITS[ob.days][0]}</b><span>Her kas grubu haftada en az iki kez çalışır.</span></div><button class="btn" data-a="obnext" style="margin-top:16px">Devam</button>`;
   else if(st===5)c=`<h1>Nerede çalışacaksın?</h1><p class="lead">Programı imkânlarına göre kuralım.</p>${Object.entries(PLACES).map(([k,g])=>optCardT('obplace',k,g,ob.place===k,PLACETH[k])).join('')}<button class="btn" data-a="obnext">Devam</button>`;
   else if(st===6)c=`<h1>Ne kadar süre?</h1><p class="lead">Bir antrenman ne kadar sürsün?</p><div class="daypick four">${[30,45,60,90].map(n=>`<button class="dp${ob.dur===n?' on':''}" data-a="obdur" data-v="${n}" aria-pressed="${ob.dur===n}">${n}<small>dakika</small></button>`).join('')}</div>
-    <h4 class="obh">Kaçınman gereken bir bölge var mı?</h4><div class="chips wrap">${[['bel','Bel'],['omuz','Omuz'],['diz','Diz']].map(([k,l])=>`<button class="chip${ob.avoid.includes(k)?' on':''}" data-a="obavoid" data-v="${k}" aria-pressed="${ob.avoid.includes(k)}">${l}</button>`).join('')}</div>
-    <p class="note">Seçtiğin bölgeyi zorlayan hareketler programına konmaz. Ağrın varsa önce bir doktora ya da fizyoterapiste danış.</p><button class="btn" data-a="obnext" style="margin-top:12px">Devam</button>`;
+    <h4 class="obh">Kaçınman gereken bir bölge var mı?</h4><div class="chips wrap grid3">${[['bel','Bel'],['omuz','Omuz'],['diz','Diz'],['dirsek','Dirsek'],['bilek','Bilek'],['boyun','Boyun'],['kalca','Kalça'],['ayak','Ayak bileği'],['sirt','Sırt']].map(([k,l])=>`<button class="chip${ob.avoid.includes(k)?' on':''}" data-a="obavoid" data-v="${k}" aria-pressed="${ob.avoid.includes(k)}">${l}</button>`).join('')}</div>
+    <p class="note">Seçtiğin bölgeyi zorlayan hareketler programına konmaz. Ağrın varsa önce bir doktora ya da fizyoterapiste danış.</p><button class="btn" data-a="obdone" style="margin-top:12px">Başlayalım</button>`;
   else if(st===7)c=`<h1>Hesabını oluştur</h1><p class="lead">İlerlemen telefonunu değiştirsen de kaybolmasın.</p>
     <label class="fld"><span>Adın</span><input data-c="obname" value="${esc(ob.name)}" autocomplete="name"></label>
     <label class="fld"><span>E-posta</span><input type="email" data-c="obemail" value="${esc(ob.email)}" autocomplete="email" inputmode="email"></label>
@@ -2883,10 +2939,10 @@ function newProgModal(){
   <h4>Hedef</h4>${grp('pngoal',GOALS,ob.goal)}<h4>Deneyim</h4>${grp('pnexp',EXPS,ob.exp)}<h4>Yer</h4>${grp('pnplace',PLACES,ob.place)}
   <h4>Haftada kaç gün</h4><div class="chips wrap">${[2,3,4,5,6].map(n=>`<button class="chip${ob.days===n?' on':''}" data-a="pndays" data-v="${n}" aria-pressed="${ob.days===n}">${n} gün</button>`).join('')}</div>
   <h4>Süre</h4><div class="chips wrap">${[30,45,60,90].map(n=>`<button class="chip${ob.dur===n?' on':''}" data-a="pndur" data-v="${n}" aria-pressed="${ob.dur===n}">${n} dk</button>`).join('')}</div>
-  <h4>Kaçınılacak bölge</h4><div class="chips wrap">${[['bel','Bel'],['omuz','Omuz'],['diz','Diz']].map(([k,l])=>`<button class="chip${ob.avoid.includes(k)?' on':''}" data-a="pnavoid" data-v="${k}" aria-pressed="${ob.avoid.includes(k)}">${l}</button>`).join('')}</div>
+  <h4>Kaçınılacak bölge</h4><div class="chips wrap">${[['bel','Bel'],['omuz','Omuz'],['diz','Diz'],['dirsek','Dirsek'],['bilek','Bilek'],['boyun','Boyun'],['kalca','Kalça'],['ayak','Ayak bileği'],['sirt','Sırt']].map(([k,l])=>`<button class="chip${ob.avoid.includes(k)?' on':''}" data-a="pnavoid" data-v="${k}" aria-pressed="${ob.avoid.includes(k)}">${l}</button>`).join('')}</div>
   <div class="cbtns"><button class="btn" data-a="pncreate">Programı oluştur</button></div><p class="note">Mevcut programın yenisiyle değişir, geçmiş antrenmanların silinmez.</p>`;
 }
-function isPro(){return !!(S.pro&&S.pro.until>Date.now());}
+function isPro(){return true;}
 let planSel='yil',payNext=null;
 const PRO_FEATS=[['Sınırsız Koç.ai','Verilerini bilen, programını kendisi düzenleyen antrenör','M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z'],['Akıllı program','Takılma tespiti, hafif hafta ve eksik bölge önerileri','M4 19V5M4 19h16M8 15l4-4 3 3 5-6'],['3D anatomi','Gerçek kas modeli, yakınlaştırma ve ısı haritası','M12 2l9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10'],['Gelişmiş analiz','1RM gelişimi ve kas gruplarına göre haftalık set','M3 3v18h18M7 14l3-3 3 3 6-6'],['Sınırsız program ve hareket','Farklı hedefler için programlar, istediğin kadar kendi hareketin','M4 6h16M4 12h16M4 18h10'],['Fotoğraf, Excel, renkler','İlerleme fotoğrafı karşılaştırma, dışa aktarma ve vurgu renkleri','M4 7h3l2-3h6l2 3h3v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z']];
 const PW_SRC={coach:'Bu haftaki ücretsiz koç mesajların bitti; Premium’da sınırsız.','3d':'3D anatomi, Premium’a özel.',smart:'Akıllı program, Premium’a özel.',photo:'Fotoğraf karşılaştırma, Premium’a özel.',csv:'Dışa aktarma, Premium’a özel.',cx:'Ücretsiz sürümde en fazla 3 kendi hareketini ekleyebilirsin.',multi:'Birden fazla program kaydetmek Premium’a özel.',adv:'Gelişmiş analiz, Premium’a özel.',accent:'Vurgu renkleri, Premium’a özel.'};
@@ -2899,7 +2955,7 @@ function paywall(src){const y=planSel==='yil';
   <div class="pwlinks"><button class="linkbtn" data-a="prestore">Satın alımları geri yükle</button></div>
   <h4 class="pwh">Premium’da neler var?</h4><ul class="pwf">${PRO_FEATS.map(([t,d,ic])=>`<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ic}"/></svg><span><b>${t}</b><small>${d}</small></span></li>`).join('')}</ul>
   <table class="pwcmp"><thead><tr><th></th><th>Ücretsiz</th><th>Premium</th></tr></thead><tbody>${PW_CMP.map(([a,f,p])=>`<tr><td>${a}</td><td>${f}</td><td>${p}</td></tr>`).join('')}</tbody></table></div>`;}
-function proCard(){if(isPro()){const d=Math.max(1,Math.ceil((S.pro.until-Date.now())/864e5));return `<div class="procard on"><span class="crown" aria-hidden="true">★</span><div><b>Premium aktif</b><span>${S.pro.trial?'Deneme sürümü, '+d+' gün kaldı':'Plan: '+(S.pro.plan==='yil'?'Yıllık':'Aylık')}</span></div><button class="linkbtn" data-a="preset">Sıfırla (test)</button></div>`;}
+function proCard(){return '';if(isPro()){const d=Math.max(1,Math.ceil((S.pro.until-Date.now())/864e5));return `<div class="procard on"><span class="crown" aria-hidden="true">★</span><div><b>Premium aktif</b><span>${S.pro.trial?'Deneme sürümü, '+d+' gün kaldı':'Plan: '+(S.pro.plan==='yil'?'Yıllık':'Aylık')}</span></div><button class="linkbtn" data-a="preset">Sıfırla (test)</button></div>`;}
   return `<button class="procard" data-a="paywall" data-v="profile"><span class="crown" aria-hidden="true">★</span><div><b>Lift-Up Premium’a geç</b><span>Koç, 3D anatomi, akıllı program ve Wrapped. 7 gün ücretsiz.</span></div><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;}
 function lockedCoach(){return `<h1>Koç</h1><div class="lockview"><div class="lockic">${LOGO}<span>★</span></div><h2>Kişisel yapay zekâ antrenörün</h2><p>Antrenmanlarını, rekorlarını ve kas haritanı bilen bir koçla konuş. Ağrın olduğunda alternatif hareket önerir, takıldığın yerde çözüm bulur, programını senin yerine düzenler.</p>
   <div class="lockdemo"><div class="msg me">Omzum ağrıyor, bugün ne yapayım?</div><div class="msg bot">Bugün omzu zorlayan omuz press’i çıkaralım; yerine bacak ve sırt ağırlıklı çalışalım. Ağrı sürerse bir fizyoterapiste görün.</div></div>
@@ -2925,8 +2981,8 @@ function tourPos(){if(tourI<0)return;const st=TOUR[tourI],el=document.querySelec
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-tour]');if(!b)return;e.stopPropagation();if(b.dataset.tour==='skip')tourEnd();else tourNext();},true);
 window.addEventListener('scroll',()=>{if(tourI>=0)tourPos();},{passive:true});
 window.addEventListener('resize',()=>{if(tourI>=0)tourPos();});
-function coachLeft(){if(isPro())return 99;const wk=sow(new Date()).getTime();if(!S.coachUse||S.coachUse.w!==wk)return 3;return Math.max(0,3-S.coachUse.n);}
-function quotaHtml(){if(isPro())return '';const l=coachLeft();return `<div class="quota${l?'':' zero'}"><span>${l?`Bu hafta <b>${l}/3</b> ücretsiz mesajın kaldı.`:'Bu haftaki ücretsiz mesajların bitti; pazartesi yenilenir.'}</span><button data-a="paywall" data-v="coach">Sınırsız için Premium ★</button></div>`;}
+const COACH_DAY=15;function coachLeft(){const d=dk(new Date());if(!S.coachDay||S.coachDay.d!==d)return COACH_DAY;return Math.max(0,COACH_DAY-S.coachDay.n);}
+function quotaHtml(){const l0=coachLeft();if(l0>3)return '';return `<div class="quota${l0?'':' zero'}"><span>${l0?`Bugün ${l0} mesaj hakkın kaldı.`:'Bugünlük bu kadar; yarın devam edelim.'}</span></div>`;const l=coachLeft();return `<div class="quota${l?'':' zero'}"><span>${l?`Bu hafta <b>${l}/3</b> ücretsiz mesajın kaldı.`:'Bu haftaki ücretsiz mesajların bitti; pazartesi yenilenir.'}</span><button data-a="paywall" data-v="coach">Sınırsız için Premium ★</button></div>`;}
 function savedProgs(){let h='';if(S.progs&&S.progs.length)h+=`<div class="savedp"><span>Kayıtlı programların</span><div class="chips wrap">${S.progs.map((p,i)=>`<button class="chip" data-a="pswitch" data-i="${i}">${esc(p.name)}, ${p.days.length} gün</button>`).join('')}</div></div>`;
   if(progEdit&&!isPro())h+=`<button class="sugg lockt" data-a="paywall" data-v="multi"><b>Birden fazla program kaydet ★</b><span>Farklı hedefler için programlar oluştur, aralarında tek dokunuşla geç.</span></button>`;return h;}
 function advHtml(){if(!isPro())return `<button class="sugg lockt" data-a="paywall" data-v="adv"><b>Gelişmiş analiz ★</b><span>Tahmini tek tekrar maksimumunun gelişimi ve kas gruplarına göre haftalık set dağılımı.</span></button>`;
@@ -2984,8 +3040,7 @@ function fmtWhen(t){const d=new Date(t),d0=new Date();d0.setHours(0,0,0,0);const
 function recTxt(k){const o=regionRecovery(Date.now()+recOff*36e5)[k];if(!o.last)return 'Hiç çalışılmadı, hazır';return o.pct>=1?'Toparlandı, hazır':`%${Math.round(o.pct*100)} toparlandı, hazır: ${fmtWhen(o.ready)}`;}
 function offLabel(){return recOff===0?'Şimdi':recOff<24?`${recOff} saat sonra`:`${Math.floor(recOff/24)} gün ${recOff%24?recOff%24+' saat ':''}sonra`;}
 function recBars(){const R=regionRecovery(Date.now()+recOff*36e5);return Object.keys(REG).sort((a,b)=>R[a].pct-R[b].pct).map(k=>{const o=R[k],p=Math.round(o.pct*100),c=o.pct<0.5?'r':o.pct<1?'y':'g';return `<div class="rbar"><span class="rbn">${REG[k].n}</span><span class="rbt"><i class="${c}" style="width:${Math.max(4,p)}%"></i></span><span class="rbv">${o.last?(o.pct>=1?'Hazır':fmtWhen(o.ready)):'Hazır'}</span></div>`;}).join('');}
-function recPanel(){return `<div class="recsim"><div class="rsh"><b>Zaman makinesi</b><span id="recofflbl">${offLabel()}</span></div><p class="sub" style="margin:2px 0 8px">Kaydırıcıyı sağa çek, kasların saat saat toparlanmasını izle.</p><input type="range" min="0" max="72" step="1" value="${recOff}" data-c="recoff" aria-label="Zamanı ileri al"><div class="rsticks"><span>Şimdi</span><span>+1 gün</span><span>+2 gün</span><span>+3 gün</span></div></div>
-  <h2>Kas kas toparlanma</h2><p class="sub">Toparlanma süresi o kasa yaptığın set sayısına ve zorluğa göre hesaplanır.</p><div class="list recbars" id="recbars">${recBars()}</div>`;}
+function recPanel(){return `<div class="recsim compact"><div class="rsh"><b>Zaman makinesi</b><span id="recofflbl">${offLabel()}</span></div><input type="range" min="0" max="72" step="1" value="${recOff}" data-c="recoff" aria-label="Zamanı ileri al"><div class="rsticks"><span>Şimdi</span><span>+1 gün</span><span>+2 gün</span><span>+3 gün</span></div></div><button class="wrep" data-a="recbars"><span class="wri" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h16M4 18h7"/></svg></span><span class="wrt"><b>Kas kas toparlanma</b><small>Hangi kas ne zaman hazır, tek tek gör</small></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;}
 function updRec(){const lb=document.getElementById('recofflbl');if(lb)lb.textContent=offLabel();const rs=recRs(),fw=document.getElementById('figswrap');if(fw)fw.innerHTML=figWithBubble('front',rs)+figWithBubble('back',rs);const rb=document.getElementById('recbars');if(rb)rb.innerHTML=recBars();}
 function smoothD(P){if(P.length<3)return 'M'+P.map(p=>p.join(',')).join(' L');let d=`M${P[0][0]},${P[0][1]}`;for(let i=0;i<P.length-1;i++){const p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];const a=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],b=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];d+=` C${a[0].toFixed(1)},${a[1].toFixed(1)} ${b[0].toFixed(1)},${b[1].toFixed(1)} ${p2[0]},${p2[1]}`;}return d;}
 function lineChart(pts,u,lbl){
@@ -3058,16 +3113,16 @@ async function geminiCoach(bm){
   if(!bm.content)bm.content='Tamam.';
 }
 async function gemFallback(bm,why){
-  if(kocUrl()){try{await geminiCoach(bm);}catch(e){if(S.coachUse&&S.coachUse.n>0&&!isPro())S.coachUse.n--;const c=(e&&e.name==='TypeError')?'baglanti':(e&&(e.code||e.name))||'ağ';bm.content=(c==='AbortError'?'Koç.ai sunucusu zamanında cevap vermedi; tekrar dene.':c==='origin_not_allowed'?'Koç.ai sunucusu bu adresten gelen isteklere izin vermiyor; sunucudaki ALLOWED_ORIGIN ayarına bu sitenin adresini ekle.':c==='rate_limited'?'Çok hızlı soru geldi; bir dakika sonra tekrar dene.':c==='baglanti'?'Koç.ai sunucusuna bağlanılamadı. Sunucu adresi yanlış olabilir ya da sunucu hata vermiş olabilir.':c==='google_yogun'?'Google’ın yapay zekâ sunucuları şu an çok yoğun; birkaç dakika sonra tekrar dene.':c==='anahtar_yok'?'Sunucuda Gemini anahtarı tanımlı değil (GEMINI_API_KEY).':'Koç.ai sunucusu bir hata döndürdü.')+` [hata kodu: ${c}${e&&e.detay?' / '+String(e.detay).slice(0,120):''}]`;}}
+  if(kocUrl()){try{await geminiCoach(bm);}catch(e){if(S.coachDay&&S.coachDay.n>0)S.coachDay.n--;const c=(e&&e.name==='TypeError')?'baglanti':(e&&(e.code||e.name))||'ağ';bm.content=(c==='AbortError'?'Koç.ai sunucusu zamanında cevap vermedi; tekrar dene.':c==='origin_not_allowed'?'Koç.ai sunucusu bu adresten gelen isteklere izin vermiyor; sunucudaki ALLOWED_ORIGIN ayarına bu sitenin adresini ekle.':c==='rate_limited'?'Çok hızlı soru geldi; bir dakika sonra tekrar dene.':c==='baglanti'?'Koç.ai sunucusuna bağlanılamadı. Sunucu adresi yanlış olabilir ya da sunucu hata vermiş olabilir.':c==='google_yogun'?'Google’ın yapay zekâ sunucuları şu an çok yoğun; birkaç dakika sonra tekrar dene.':c==='anahtar_yok'?'Sunucuda Gemini anahtarı tanımlı değil (GEMINI_API_KEY).':'Koç.ai sunucusu bir hata döndürdü.')+` [hata kodu: ${c}${e&&e.detay?' / '+String(e.detay).slice(0,120):''}]`;}}
   else bm.content=why==='out'?'Koç.ai bu sürümde kendi sunucusu üzerinden Gemini ile çalışır. Profil → Veriler → “Koç.ai sunucusu” alanına sunucunun adresini ekle.':'Koç.ai’a şu an bağlanılamadı. Sayfayı yenileyip tekrar dene.';
   coachBusy=false;S.chat=S.chat.slice(-40);save();render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
 }
 const SCREEN_TOURS={
  home:[{sel:'.hero .herobtn',t:'Bugünkü antrenmanın',x:'Buna dokun; programdaki sıradaki gün ve ağırlıkların hazır gelir.'},{sel:'.tiles',t:'Seri, hedef, seviye',x:'Alev serini, ortadaki kutu bu haftaki hedefini gösterir. Seviyeye dokununca rozetlerin açılır.'},{sel:'.week',t:'Bu hafta',x:'Renkli günler antrenman yaptığın günler.'}],
- workout:[{sel:'.day-card.next',t:'Sıradaki gün',x:'Çerçeveli kart sıradaki antrenmanın. Hangi günü yapacaksan ona dokun.'},{sel:'[data-a=pedit]',t:'Programı düzenle',x:'Hareket ekleyip çıkarabilir ya da programı baştan kurabilirsin.'},{sel:'.tools',t:'Araçlar',x:'Hareket kütüphanesi, 1RM ve plaka hesaplayıcı burada.'}],
+ workout:[{sel:'.day-card.next',t:'Sıradaki gün',x:'Çerçeveli kart sıradaki antrenmanın. Hangi günü yapacaksan ona dokun.'},{sel:'[data-a=pedit]',t:'Programı düzenle',x:'Hareket ekleyip çıkarabilir ya da programı baştan kurabilirsin.'},{sel:'.iconbtn[data-a=lib]',t:'Hareket kütüphanesi',x:'30 hareketin nasıl yapıldığını animasyonlarla gör.'},{sel:'.sugr',t:'Öneriler',x:'Takıldığın hareketler ve eksik bölgeler için öneriler burada toplanır.'}],
  progress:[{sel:'.pseg',t:'Görünümler',x:'Kaslar, grafikler, vücut ölçülerin ve takvim arasında geç.'},{sel:'.modeseg',t:'Harita modu',x:'Yoğunluk ne kadar çalıştığını, Toparlanma hangi kasın hazır olduğunu gösterir.'},{sel:'.figs',t:'Kas haritası',x:'Bir kasa dokun; ne kadar çalıştığını ve ona uygun hareketleri gör.'}],
  coach:[{sel:'.qchips',t:'Hazır sorular',x:'Birine dokun ya da aşağıya kendi sorunu yaz.'},{sel:'.cbar',t:'Koç.ai’a yaz',x:'Programında değişiklik iste; Koç.ai kendisi uygular.'}],
- profile:[{sel:'.procard',t:'Premium',x:'Sınırsız Koç.ai, 3D anatomi ve akıllı program burada.'},{sel:'.pmenu',t:'Ayarlar',x:'Vücut bilgilerin, hedefin, hatırlatmalar ve görünüm buradan değişir.'}]};
+ profile:[{sel:'.pmenu',t:'Ayarlar',x:'Vücut bilgilerin, hedefin, hatırlatmalar ve görünüm buradan değişir.'}]};
 let tourTab=null;
 if(S.onb)setTimeout(()=>screenTour(tab),2400);
 function screenTour(t,force){if(!SCREEN_TOURS[t]||tourI>=0)return;if(t==='workout'&&S.active)return;S.seen=S.seen||{};if(!force&&S.seen[t])return;tourTab=t;setTimeout(()=>{if(tab===t&&tourI<0){window.scrollTo(0,0);tourStart(SCREEN_TOURS[t]);}},force?50:600);}
@@ -3168,11 +3223,14 @@ WORKOUT_TOUR.splice(1,0,{sel:'.wuroutine',t:'Isınma rutini',x:'İstersen önce 
 WORKOUT_TOUR.splice(3,0,{sel:'.exb .cpy',t:'Geçen seferki gibi',x:'Tek dokunuşla bütün setleri geçen seferin değerleriyle doldurur.'},{sel:'.exb .busy',t:'Alet dolu mu?',x:'Sehpa ya da raf doluysa buna dokun; aynı kası çalıştıran başka bir hareket seç.'});
 splash();
 
+function sugRow(){if(!isPro()){const n=plateaus().length;return n?`<button class="wrep sugr lockr" data-a="paywall" data-v="smart"><span class="wri" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 15l4-4 3 3 5-6"/></svg></span><span class="wrt"><b>${n} harekette ilerlemen durmuş ★</b><small>Hangisi olduğunu ve çözümünü Premium ile gör</small></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`:'';}const pl=plateauHtml(),sg=suggestHtml(),n=(pl?plateaus().slice(0,2).length:0)+(sg?1:0);if(!n)return '';return `<button class="wrep sugr" data-a="sugopen"><span class="wri" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="wrt"><b>Öneriler (${n})</b><small>${pl?'Takılma tespiti':''}${pl&&sg?' · ':''}${sg?'Eksik bölge önerisi':''}</small></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;}
+async function backupDown(){const keep=Object.assign({},S);delete keep.active;const blob=new Blob([JSON.stringify({app:'lift-up',v:1,date:new Date().toISOString(),data:keep})],{type:'application/json'});await saveImage(blob,'lift-up-yedek-'+new Date().toISOString().slice(0,10)+'.json');}
+function backupUp(t){const f=t.files&&t.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result),d=o&&o.data;if(!o||o.app!=='lift-up'||!d||!Array.isArray(d.workouts))throw 0;S=Object.assign({},d,{active:null});fillDefaults();save();applyTheme();closeModal();profSec=null;tab='home';render();toast('Yedek geri yüklendi: '+S.workouts.length+' antrenman');}catch(e){toast('Bu dosya bir Lift-Up yedeği değil');}};r.readAsText(f);t.value='';}
 const VIEWS={home,workout,progress,profile,coach};
 function render(){
   applyTheme();
   const nav=document.querySelector('nav.tabs');
-  document.body.classList.toggle('onbm',!S.onb);document.body.dataset.dp=dayPart();document.body.classList.toggle('tc',S.onb&&tab==='coach');
+  document.body.classList.toggle('onbm',!S.onb);document.body.dataset.dp=dayPart();document.body.classList.toggle('tc',!!(S.onb&&tab==='coach'));
   if(!S.onb){nav.hidden=true;$('view').innerHTML=onboarding();renderRest();startFigs();return;}
   nav.hidden=false;
   curSet=null;if(S.active){for(let i=0;i<S.active.ex.length&&!curSet;i++){const j=S.active.ex[i].sets.findIndex(x=>!x.done);if(j>=0)curSet={i,j};}}
@@ -3242,6 +3300,9 @@ function act(a,d){
     case 'day':{const v=+d.v,k=S.rem.days.indexOf(v);if(k>=0)S.rem.days.splice(k,1);else S.rem.days.push(v);S.rem.days.sort((x,y)=>x-y);break;}
     case 'seed':arm('seed',()=>{const keep={};['onb','prog','user','pro','seen','tourDone','visits','theme','simple','customEx','chat','rem','body','goal'].forEach(k=>{if(S[k]!==undefined)keep[k]=S[k];});S=Object.assign(seed(),keep);fillDefaults();restEnd=0;save();toast('Örnek veriler yüklendi');});return;
     case 'wipe':arm('wipe',()=>{profSec=null;closeModal();ob.step=0;tab='home';S={workouts:[],goal:S.goal,rem:S.rem,active:null};restEnd=0;save();toast('Tüm veriler silindi');});return;
+    case 'recbars':showModal(`<div class="card-top"><div><h3>Kas kas toparlanma</h3><p class="ensub">${offLabel()}</p></div><button class="x" data-a="closemodal" aria-label="Kapat">×</button></div><p class="sub" style="margin:0 0 8px">Süre, o kasa yaptığın set sayısına ve zorluğa göre hesaplanır.</p><div class="list recbars" id="recbars">${recBars()}</div>`);return;
+    case 'bkdown':backupDown();return;
+    case 'sugopen':showModal(`<div class="card-top"><h3>Öneriler</h3><button class="x" data-a="closemodal" aria-label="Kapat">×</button></div><div class="sugmodal">${plateauHtml()}${suggestHtml()}</div>`);return;
     case 'closemodal':profSec=null;if(rt){clearInterval(rtT);rt=null;}closeModal();return;
     case 'copyprev':{const e=S.active.ex[+d.i],ps=prevSetsOf(e.n)||[];ps.forEach((q,j)=>{if(!e.sets[j])e.sets.push({kg:q.kg,reps:q.reps,done:false});else if(!e.sets[j].done){e.sets[j].kg=q.kg;e.sets[j].reps=q.reps;}});toast('Geçen seferki değerler yazıldı');break;}
     case 'busy':showModal(busyModal(+d.i));return;
@@ -3323,6 +3384,7 @@ function act(a,d){
     case 'wprev':wGo(-1);return;
     case 'wclose':closeWrap();return;
     case 'wsound':{if(!W)return;W.sound=!W.sound;if(W.sound&&W.started)musicStart();else musicStop();const b=document.querySelector('[data-a=wsound]');if(b){b.textContent=W.sound?'Ses açık':'Ses kapalı';b.setAttribute('aria-pressed',W.sound);}return;}
+    case 'rotcycle':{const nx=segV==='auto'?'0':segV==='0'?'180':'auto';act('rot',{v:nx});render();return;}
     case 'rot':{setSeg(d.v);if(T3&&document.querySelector('.stage3d')){if(d.v==='auto'){T3.auto=true;T3.target=null;}else{T3.auto=false;const tg=(+d.v)*Math.PI/180;T3.target=tg+2*Math.PI*Math.round((T3.ang-tg)/(2*Math.PI));}return;}const rot=document.querySelector('.rot');if(!rot)return;if(d.v==='auto'){rotAuto=true;rot.style.transform='';rot.classList.add('auto');return;}if(rotAuto){rotY=rotFrom(rot);rotAuto=false;rot.classList.remove('auto');rot.style.transform=`rotateY(${rotY}deg)`;void rot.offsetWidth;}const tg=+d.v;rotY=tg+360*Math.round((rotY-tg)/360);rot.style.transition='transform .7s cubic-bezier(.2,.8,.3,1)';rot.style.transform=`rotateY(${rotY}deg)`;setTimeout(()=>{rot.style.transition='';},750);return;}
     case 'wuo':A.ex[i].wuo=!A.ex[i].wuo;break;
     case 'wud':{const e=A.ex[i];e.wud=e.wud||[];e.wud[j]=!e.wud[j];break;}
@@ -3336,7 +3398,7 @@ function act(a,d){
     case 'ms':mDraft[d.k]=Math.max(10,Math.round((mDraft[d.k]+0.5*(+d.d))*10)/10);showModal(msModal());return;
     case 'mssave':S.meas.push({date:new Date().toISOString(),...mDraft});closeModal();toast('Ölçüler kaydedildi');break;
     case 'phdel':S.photos.splice(i,1);toast('Fotoğraf silindi');break;
-    case 'obnext':ob.step=Math.min(7,ob.step+1);render();window.scrollTo(0,0);return;
+    case 'obnext':ob.step=Math.min(6,ob.step+1);render();window.scrollTo(0,0);return;
     case 'obback':ob.step=Math.max(0,ob.step-1);render();window.scrollTo(0,0);return;
     case 'obgo':ob.step=+d.v;render();window.scrollTo(0,0);return;
     case 'obgoal':ob.goal=d.v;render();return;
@@ -3389,6 +3451,7 @@ document.addEventListener('input',e=>{const t=e.target,c=t.dataset&&t.dataset.c;
 document.addEventListener('change',e=>{
   const t=e.target,c=t.dataset.c;if(!c)return;
   if(c==='vidup'){uploadVid(t);return;}
+  if(c==='bkup'){backupUp(t);return;}
   if(c==='suppt'){suppDraft.t=t.value;return;}
   if(c==='wnote'){const w=lastSum&&S.workouts.find(x=>x.id===lastSum.w.id);if(w){w.note=t.value.trim();save();toast('Not kaydedildi');}return;}
   if(c==='regsel'){selReg=t.value;bubbleOn=true;render();return;}
