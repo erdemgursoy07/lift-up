@@ -2908,7 +2908,7 @@ function splash(){let reduce=false;try{reduce=matchMedia('(prefers-reduced-motio
   el.innerHTML=`<svg viewBox="0 0 300 220" class="spsvg"><rect class="sp-rod" x="38" y="104" width="252" height="10" rx="5"/>${bar('b1',70,40,'#2E9E4F',.05)}${bar('b2',100,64,'#F2B705',.17)}${bar('b3',130,88,'#3D7BEA',.29)}${bar('b4',160,112,'#E0334A',.41)}<rect class="sp-col" x="188" y="94" width="10" height="30" rx="3"/></svg><div class="sptx"><b>Lift-Up</b><span>Her antrenmanda biraz daha ağır</span></div>`;
   document.body.appendChild(el);const end=()=>{if(el.classList.contains('out'))return;el.classList.add('out');setTimeout(()=>el.remove(),450);};el.addEventListener('click',end);setTimeout(end,2500);}
 splash();
-const KOC_API_URL='';
+const KOC_API_URL='https://lift-up-koc.erdemgursoy07.workers.dev';
 function kocUrl(){return String(S.kocUrl||KOC_API_URL||'').trim();}
 function buildCoachMsgs(){const hist=S.chat.slice(0,-1).slice(-12);while(hist.length&&hist[0].role!=='user')hist.shift();return hist.map((m,i)=>({role:m.role,content:i===0?coachCtx()+'\n\nKULLANICI: '+m.content:(m.content||'(boş)')}));}
 const GEM_PROTO='\n\nCEVAP BİÇİMİ: Yalnızca şu JSON nesnesiyle cevap ver: {"cevap":"kullanıcıya Türkçe, samimi ve kısa cevabın; madde gerekiyorsa satır başında - kullan","islemler":[]}. Kullanıcı programında değişiklik isterse islemler dizisine şunlardan ekle: {"tur":"ekle","gun":"1","hareket":"<UYGULAMADAKİ HAREKETLER listesinden tam ad>","set":3,"tekrar":10} | {"tur":"degistir","gun":"1","hareket":"<eski tam ad>","yeni":"<yeni tam ad>"} | {"tur":"hedef","gun":"1","hareket":"<tam ad>","set":4,"tekrar":8} | {"tur":"hafif","hareket":"<tam ad>"}. gun, programdaki gün sırasıdır. İstemediği değişikliği yapma; değişiklik yoksa islemler boş dizi olsun.';
