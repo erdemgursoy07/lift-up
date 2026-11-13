@@ -2158,7 +2158,7 @@ function profileFull(){
   <div class="row"><label for="rt">Saat</label><input id="rt" type="time" data-c="time" value="${r.time}"></div>`:''}</div>
   <p class="note">${sum}</p>
   ${settingsHtml()}
-  <h2>Veriler</h2>
+  <h2>Veriler</h2><label class="fld" style="margin-top:10px"><span>Koç.ai sunucusu (GitHub ve telefon sürümü için)</span><input data-c="kocurl" value="${esc(S.kocUrl||'')}" placeholder="https://lift-up-koc.hesabin.workers.dev" inputmode="url" autocomplete="off"></label><p class="note" style="margin:0 0 8px">claude.ai’da açıldığında Koç.ai bunu kullanmaz, doğrudan Claude ile çalışır.</p>
   <button class="btn ghost" data-a="seed">${armed==='seed'?'Emin misin? Tekrar dokun':'Örnek verileri yeniden yükle'}</button>
   <button class="btn ghost danger" data-a="wipe">${armed==='wipe'?'Emin misin? Tekrar dokun':'Tüm verileri sil'}</button>
   <p class="note">Lift-Up, Faz 1 prototipi. Veriler yalnızca bu tarayıcıda saklanır.</p>`;
@@ -2644,11 +2644,16 @@ function coachTools(bm){const names=EX.map(e=>e.n),done=t=>{bm.acts.push(t);save
 function updLastBot(){const el=document.querySelector('#chat .msg.bot:last-child');const m=(S.chat||[]).slice(-1)[0];if(el&&m&&m.role==='assistant'){el.innerHTML=(m.content?md(m.content):'<span class="typing"><i></i><i></i><i></i></span>')+(m.acts||[]).map(a=>`<span class="act">\u2713 ${esc(a)}</span>`).join('');const r=el.getBoundingClientRect();if(r.bottom>window.innerHeight-170)window.scrollBy(0,r.bottom-window.innerHeight+190);}}
 async function sendCoach(q){q=String(q||'').trim();if(coachBusy||!q)return;if(!isPro()){if(coachLeft()<=0){payNext='coach';showModal(paywall('coach'));return;}const wk=sow(new Date()).getTime();if(!S.coachUse||S.coachUse.w!==wk)S.coachUse={w:wk,n:0};S.coachUse.n++;}S.chat=S.chat||[];S.chat.push({role:'user',content:q});coachDraft='';const bm={role:'assistant',content:'',acts:[]};S.chat.push(bm);coachBusy=true;tab='coach';render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
   let smp=null,why='';try{if(!(window.claude&&window.claude.use))why='out';else smp=await window.claude.use('sample');}catch(e){why='err';}
-  if(!smp){bm.content=why==='out'?'Koç.ai şu an çalışamıyor: bu sayfa claude.ai dışında (örneğin GitHub ya da indirilen dosya) açılmış. Koç.ai’ı denemek için prototipi claude.ai linkinden aç. Gerçek uygulamada Koç.ai kendi sunucusu üzerinden her yerde çalışacak.':'Koç.ai’a şu an bağlanılamadı. Sayfayı yenileyip tekrar dene; sorun sürerse bana haber ver.';coachBusy=false;save();render();return;}
+  if(!smp){await gemFallback(bm,why);return;}
   const hist=S.chat.slice(0,-1).slice(-12);while(hist.length&&hist[0].role!=='user')hist.shift();
   const msgs=hist.map((m,i)=>({role:m.role,content:i===0?coachCtx()+'\n\nKULLANICI: '+m.content:(m.content||'(bo\u015f)')}));
-  try{const r=await smp(msgs,{onText:({text})=>{bm.content=text;updLastBot();},tools:coachTools(bm),cache:false});if(r&&r.text)bm.content=r.text;}
-  catch(e){bm.content=(e&&e.text)||(e&&e.code==='not_granted'?'Ko\u00e7u kullanmak i\u00e7in izin vermen gerekiyor.':e&&e.code==='rate_limited'?'\u00c7ok h\u0131zl\u0131 soru geldi, biraz bekleyip tekrar dene.':'Bir sorun oldu, tekrar dener misin?');}
+  let lim=null;try{lim=smp.limits?await smp.limits():null;}catch(e){}
+  const canTools=!!(lim&&lim.tools);const tierOk=t=>!lim||!lim.modelTiers||lim.modelTiers.includes(t);
+  const run=withTools=>{const m2=withTools?msgs:msgs.map((x,i)=>i===0?{role:x.role,content:x.content+'\n\n(NOT: Bu görünümde programı değiştiren araçlar kullanılamıyor; değişiklik istenirse kullanıcıya Antrenman sekmesinden nasıl yapacağını kısaca anlat.)'}:x);
+    const o={onText:({text})=>{bm.content=text;updLastBot();},cache:false};if(tierOk('quick'))o.modelTier='quick';if(withTools)o.tools=coachTools(bm);return smp(m2,o);};
+  const MSG={not_granted:'Koç.ai’ın senin Claude hesabını kullanmasına izin verilmedi. Sayfayı yenileyip tekrar sor; çıkan izin penceresinde “İzin ver”e bas.',sampling_disabled:'Bu Claude hesabında Koç.ai’ın kullandığı özellik kapalı.',capability_disabled:'Koç.ai bu görünümde kullanılamıyor. Prototipi claude.ai’da tarayıcıdan ya da Claude uygulamasından açmayı dene.',not_declared:'Koç.ai bu sayfa için etkin değil.',session_expired:'Claude oturumun sona ermiş; yeniden giriş yapıp tekrar dene.',rate_limited:'Şu an çok fazla istek var ya da Claude kullanım sınırına ulaştın; biraz sonra tekrar dene.',refused:'Koç.ai bu soruya cevap veremedi; soruyu farklı şekilde sormayı dene.',empty_completion:'Koç.ai boş bir cevap döndü; soruyu biraz daha açık sormayı dene.',prompt_too_large:'Sohbet çok uzadı; “Sohbeti temizle” deyip tekrar dene.'};
+  try{let r;try{r=await run(canTools);}catch(e){if(canTools&&e&&(e.code==='tools_unavailable'||e.code==='invalid_request')&&!e.text){bm.content='';updLastBot();r=await run(false);}else throw e;}if(r&&r.text)bm.content=r.text;}
+  catch(e){const code=(e&&e.code)||'bilinmiyor';bm.content=(e&&e.text)?e.text+'\n\n(Cevap yarıda kesildi.)':(MSG[code]||'Koç.ai’a şu an ulaşılamadı. Biraz sonra tekrar dene.')+` [hata kodu: ${code}]`;}
   coachBusy=false;S.chat=S.chat.slice(-40);save();render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}}
 const INFO={home:['Büyük karttaki butonla bugünkü antrenmanına başla.','Alev, haftalık hedefini kaç hafta üst üste tutturduğunu gösterir.','Seviye kutusuna dokun, rozetlerini gör.'],
   workout:['Program günlerinden birine dokun, antrenman başlasın.','Ağırlıklar geçen seferine göre otomatik ayarlanır.','Her seti yaptıktan sonra ✓ işaretle; dinlenme sayacı kendiliğinden başlar.'],
@@ -2903,6 +2908,31 @@ function splash(){let reduce=false;try{reduce=matchMedia('(prefers-reduced-motio
   el.innerHTML=`<svg viewBox="0 0 300 220" class="spsvg"><rect class="sp-rod" x="38" y="104" width="252" height="10" rx="5"/>${bar('b1',70,40,'#2E9E4F',.05)}${bar('b2',100,64,'#F2B705',.17)}${bar('b3',130,88,'#3D7BEA',.29)}${bar('b4',160,112,'#E0334A',.41)}<rect class="sp-col" x="188" y="94" width="10" height="30" rx="3"/></svg><div class="sptx"><b>Lift-Up</b><span>Her antrenmanda biraz daha ağır</span></div>`;
   document.body.appendChild(el);const end=()=>{if(el.classList.contains('out'))return;el.classList.add('out');setTimeout(()=>el.remove(),450);};el.addEventListener('click',end);setTimeout(end,2500);}
 splash();
+const KOC_API_URL='';
+function kocUrl(){return String(S.kocUrl||KOC_API_URL||'').trim();}
+function buildCoachMsgs(){const hist=S.chat.slice(0,-1).slice(-12);while(hist.length&&hist[0].role!=='user')hist.shift();return hist.map((m,i)=>({role:m.role,content:i===0?coachCtx()+'\n\nKULLANICI: '+m.content:(m.content||'(boş)')}));}
+const GEM_PROTO='\n\nCEVAP BİÇİMİ: Yalnızca şu JSON nesnesiyle cevap ver: {"cevap":"kullanıcıya Türkçe, samimi ve kısa cevabın; madde gerekiyorsa satır başında - kullan","islemler":[]}. Kullanıcı programında değişiklik isterse islemler dizisine şunlardan ekle: {"tur":"ekle","gun":"1","hareket":"<UYGULAMADAKİ HAREKETLER listesinden tam ad>","set":3,"tekrar":10} | {"tur":"degistir","gun":"1","hareket":"<eski tam ad>","yeni":"<yeni tam ad>"} | {"tur":"hedef","gun":"1","hareket":"<tam ad>","set":4,"tekrar":8} | {"tur":"hafif","hareket":"<tam ad>"}. gun, programdaki gün sırasıdır. İstemediği değişikliği yapma; değişiklik yoksa islemler boş dizi olsun.';
+async function geminiCoach(bm){
+  const url=kocUrl();const msgs=buildCoachMsgs().map((m,i)=>i===0?{role:m.role,content:m.content+GEM_PROTO}:m);
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);let r;
+  try{r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,json:true}),signal:ctl.signal});}finally{clearTimeout(tm);}
+  let d={};try{d=await r.json();}catch(e){}
+  if(!r.ok)throw {code:d.error||('http_'+r.status)};
+  const txt=String(d.text||'');let obj=null;try{obj=JSON.parse(txt);}catch(e){const m=txt.match(/\{[\s\S]*\}/);if(m)try{obj=JSON.parse(m[0]);}catch(e2){}}
+  if(!obj){bm.content=txt;return;}
+  bm.content=String(obj.cevap||'');const tools=coachTools(bm),T=n=>tools.find(t=>t.name===n),ok=n=>EX.some(e=>e.n===n);
+  (Array.isArray(obj.islemler)?obj.islemler:[]).slice(0,5).forEach(op=>{try{
+    if(op.tur==='ekle'&&ok(op.hareket))T('program_hareket_ekle').execute({gun:String(op.gun||'1'),hareket:op.hareket,set:+op.set||undefined,tekrar:+op.tekrar||undefined});
+    else if(op.tur==='degistir'&&ok(op.hareket)&&ok(op.yeni))T('program_hareket_degistir').execute({gun:String(op.gun||'1'),eski:op.hareket,yeni:op.yeni});
+    else if(op.tur==='hedef'&&ok(op.hareket))T('program_hedef_ayarla').execute({gun:String(op.gun||'1'),hareket:op.hareket,set:+op.set||undefined,tekrar:+op.tekrar||undefined});
+    else if(op.tur==='hafif'&&ok(op.hareket))T('hafif_hafta').execute({hareket:op.hareket});}catch(e){}});
+  if(!bm.content)bm.content='Tamam.';
+}
+async function gemFallback(bm,why){
+  if(kocUrl()){try{await geminiCoach(bm);}catch(e){const c=(e&&(e.code||e.name))||'ağ';bm.content=(c==='AbortError'?'Koç.ai sunucusu zamanında cevap vermedi; tekrar dene.':c==='origin_not_allowed'?'Koç.ai sunucusu bu adresten gelen isteklere izin vermiyor; sunucudaki ALLOWED_ORIGIN ayarına bu sitenin adresini ekle.':c==='rate_limited'?'Çok hızlı soru geldi; bir dakika sonra tekrar dene.':'Koç.ai sunucusuna ulaşılamadı.')+` [hata kodu: ${c}]`;}}
+  else bm.content=why==='out'?'Koç.ai bu sürümde kendi sunucusu üzerinden Gemini ile çalışır. Profil → Veriler → “Koç.ai sunucusu” alanına sunucunun adresini ekle.':'Koç.ai’a şu an bağlanılamadı. Sayfayı yenileyip tekrar dene.';
+  coachBusy=false;S.chat=S.chat.slice(-40);save();render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
+}
 const VIEWS={home,workout,progress,profile,coach};
 function render(){
   applyTheme();
@@ -3104,6 +3134,7 @@ document.addEventListener('input',e=>{const t=e.target,c=t.dataset&&t.dataset.c;
 document.addEventListener('change',e=>{
   const t=e.target,c=t.dataset.c;if(!c)return;
   if(c==='vidup'){uploadVid(t);return;}
+  if(c==='kocurl'){S.kocUrl=t.value.trim();save();toast(S.kocUrl?'Koç.ai sunucusu kaydedildi':'Koç.ai sunucusu kaldırıldı');return;}
   if(c==='photo'){addPhoto(t.files&&t.files[0]);return;}
   if(c==='wl'){const v=parseFloat(String(t.value).replace(',','.'));if(!isNaN(v))wDraft=Math.min(300,Math.max(30,Math.round(v*10)/10));render();return;}
   if(c==='obname'||c==='obemail'||c==='obpass'||c==='cq'||c==='libq'||c==='cxn'||c==='recoff')return;

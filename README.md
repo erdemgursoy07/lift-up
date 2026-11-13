@@ -14,6 +14,7 @@
 | `docs/animasyon-brifi.md` | Egzersiz animasyonlarını yaptırmak için tasarımcı brifi |
 | `assets/logo.svg` | Logo |
 | `icons/` | Uygulama ikonları: iOS (1024, 180), Android (512, 192, uyarlanabilir ön plan 432) ve favicon |
+| `server/` | Koç.ai için Gemini sunucusu (Cloudflare Workers) ve kurulum rehberi |
 | `NOTICE.md` | Kullanılan üçüncü taraf içeriklerin lisansları ve kaynakları |
 
 ## Prototipi çalıştırmak
@@ -40,7 +41,8 @@
 ## Prototipin sınırları
 
 - Veriler yalnızca tarayıcının kendi hafızasında (localStorage) saklanır; hesap ve sunucu yoktur.
-- **Koç.ai** ve **dosya indirme** özellikleri claude.ai üzerindeki yayınlanmış sürümde çalışır; GitHub Pages'te koç "kullanılamıyor" mesajı gösterir.
+- **Koç.ai**, claude.ai'da Claude ile; GitHub Pages ve telefon sürümünde `server/` klasöründeki sunucu üzerinden Gemini ile çalışır. Kurulum için `server/README.md`.
+- **Dosya indirme** özelliği yalnızca claude.ai üzerindeki yayınlanmış sürümde çalışır.
 - Ödeme alınmaz; Premium denemesi butona basınca hemen açılır.
 - 3D motor (three.js) ilk açılışta internetten yüklenir.
 
