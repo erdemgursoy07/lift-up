@@ -2914,7 +2914,7 @@ function buildCoachMsgs(){const hist=S.chat.slice(0,-1).slice(-12);while(hist.le
 const GEM_PROTO='\n\nCEVAP BİÇİMİ: Yalnızca şu JSON nesnesiyle cevap ver: {"cevap":"kullanıcıya Türkçe, samimi ve kısa cevabın; madde gerekiyorsa satır başında - kullan","islemler":[]}. Kullanıcı programında değişiklik isterse islemler dizisine şunlardan ekle: {"tur":"ekle","gun":"1","hareket":"<UYGULAMADAKİ HAREKETLER listesinden tam ad>","set":3,"tekrar":10} | {"tur":"degistir","gun":"1","hareket":"<eski tam ad>","yeni":"<yeni tam ad>"} | {"tur":"hedef","gun":"1","hareket":"<tam ad>","set":4,"tekrar":8} | {"tur":"hafif","hareket":"<tam ad>"}. gun, programdaki gün sırasıdır. İstemediği değişikliği yapma; değişiklik yoksa islemler boş dizi olsun.';
 async function geminiCoach(bm){
   const url=kocUrl();const msgs=buildCoachMsgs().map((m,i)=>i===0?{role:m.role,content:m.content+GEM_PROTO}:m);
-  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);let r;
+  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),75000);let r;
   try{r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,json:true}),signal:ctl.signal});}finally{clearTimeout(tm);}
   let d={};try{d=await r.json();}catch(e){}
   if(!r.ok)throw {code:d.error||('http_'+r.status),detay:d.detay||''};
@@ -2929,7 +2929,7 @@ async function geminiCoach(bm){
   if(!bm.content)bm.content='Tamam.';
 }
 async function gemFallback(bm,why){
-  if(kocUrl()){try{await geminiCoach(bm);}catch(e){if(S.coachUse&&S.coachUse.n>0&&!isPro())S.coachUse.n--;const c=(e&&e.name==='TypeError')?'baglanti':(e&&(e.code||e.name))||'ağ';bm.content=(c==='AbortError'?'Koç.ai sunucusu zamanında cevap vermedi; tekrar dene.':c==='origin_not_allowed'?'Koç.ai sunucusu bu adresten gelen isteklere izin vermiyor; sunucudaki ALLOWED_ORIGIN ayarına bu sitenin adresini ekle.':c==='rate_limited'?'Çok hızlı soru geldi; bir dakika sonra tekrar dene.':c==='baglanti'?'Koç.ai sunucusuna bağlanılamadı. Sunucu adresi yanlış olabilir ya da sunucu hata vermiş olabilir.':c==='anahtar_yok'?'Sunucuda Gemini anahtarı tanımlı değil (GEMINI_API_KEY).':'Koç.ai sunucusu bir hata döndürdü.')+` [hata kodu: ${c}${e&&e.detay?' / '+String(e.detay).slice(0,120):''}]`;}}
+  if(kocUrl()){try{await geminiCoach(bm);}catch(e){if(S.coachUse&&S.coachUse.n>0&&!isPro())S.coachUse.n--;const c=(e&&e.name==='TypeError')?'baglanti':(e&&(e.code||e.name))||'ağ';bm.content=(c==='AbortError'?'Koç.ai sunucusu zamanında cevap vermedi; tekrar dene.':c==='origin_not_allowed'?'Koç.ai sunucusu bu adresten gelen isteklere izin vermiyor; sunucudaki ALLOWED_ORIGIN ayarına bu sitenin adresini ekle.':c==='rate_limited'?'Çok hızlı soru geldi; bir dakika sonra tekrar dene.':c==='baglanti'?'Koç.ai sunucusuna bağlanılamadı. Sunucu adresi yanlış olabilir ya da sunucu hata vermiş olabilir.':c==='google_yogun'?'Google’ın yapay zekâ sunucuları şu an çok yoğun; birkaç dakika sonra tekrar dene.':c==='anahtar_yok'?'Sunucuda Gemini anahtarı tanımlı değil (GEMINI_API_KEY).':'Koç.ai sunucusu bir hata döndürdü.')+` [hata kodu: ${c}${e&&e.detay?' / '+String(e.detay).slice(0,120):''}]`;}}
   else bm.content=why==='out'?'Koç.ai bu sürümde kendi sunucusu üzerinden Gemini ile çalışır. Profil → Veriler → “Koç.ai sunucusu” alanına sunucunun adresini ekle.':'Koç.ai’a şu an bağlanılamadı. Sayfayı yenileyip tekrar dene.';
   coachBusy=false;S.chat=S.chat.slice(-40);save();render();try{window.scrollTo(0,document.body.scrollHeight);}catch(e){}
 }
