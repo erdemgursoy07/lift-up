@@ -13,6 +13,7 @@
 | `docs/teknik-plan.md` | Gerçek uygulama için teknik plan: teknoloji, veri modeli, ekranlar, yol haritası, maliyetler |
 | `docs/animasyon-brifi.md` | Egzersiz animasyonlarını yaptırmak için tasarımcı brifi |
 | `assets/logo.svg` | Logo |
+| `icons/` | Uygulama ikonları: iOS (1024, 180), Android (512, 192, uyarlanabilir ön plan 432) ve favicon |
 | `NOTICE.md` | Kullanılan üçüncü taraf içeriklerin lisansları ve kaynakları |
 
 ## Prototipi çalıştırmak
@@ -31,7 +32,7 @@
 - **Otomatik ağırlık artışı:** Tüm setler tamamlanınca ağırlık artar, zorlanınca sabit kalır, takılınca hafifler; RPE'ye göre karar verir
 - **Antrenman ekranı:** Odaklı tek hareket görünümü, plaka göstergesi, ısınma setleri, süperset, dinlenme sayacı, rehberli ilk antrenman turu
 - **Kas haritası:** 2D yoğunluk ve toparlanma haritası, gerçek anatomik 3D model
-- **Yapay zekâ koç:** Kullanıcının verilerini bilen, programı düzenleyebilen sohbet koçu
+- **Koç.ai:** Kullanıcının verilerini bilen, programı düzenleyebilen sohbet koçu
 - **İlerleme:** Animasyonlu grafikler, tahmini 1RM, vücut ölçüleri, ilerleme fotoğrafları, takvim
 - **Oyunlaştırma:** Seviye ve XP, rozetler, alevli seri, rekor kutlamaları, Lift-Up Wrapped
 - **Premium modeli:** Ücretsiz ve Premium ayrımı, 7 günlük deneme ekranı
@@ -39,7 +40,7 @@
 ## Prototipin sınırları
 
 - Veriler yalnızca tarayıcının kendi hafızasında (localStorage) saklanır; hesap ve sunucu yoktur.
-- **Yapay zekâ koç** ve **dosya indirme** özellikleri claude.ai üzerindeki yayınlanmış sürümde çalışır; GitHub Pages'te koç "kullanılamıyor" mesajı gösterir.
+- **Koç.ai** ve **dosya indirme** özellikleri claude.ai üzerindeki yayınlanmış sürümde çalışır; GitHub Pages'te koç "kullanılamıyor" mesajı gösterir.
 - Ödeme alınmaz; Premium denemesi butona basınca hemen açılır.
 - 3D motor (three.js) ilk açılışta internetten yüklenir.
 
