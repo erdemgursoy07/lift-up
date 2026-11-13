@@ -1189,6 +1189,15 @@ body.tc #view{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 60px)}
 .modecap{margin:4px 2px 6px;font-size:12px;line-height:1.3}
 .s3d .stage3d{height:clamp(250px,calc(100dvh - 482px),440px)}
 .recmode .bodybox .figs svg{max-height:min(240px,calc(100dvh - 600px))}
+
+/* güvenli alan ve son düzeltmeler */
+nav.tabs .in{padding:3px 4px max(4px,calc(env(safe-area-inset-bottom,0px) - 18px))}
+.app{padding-bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 66px)}
+body.tc #view{padding-bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 62px)}
+#rest{bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 58px)}
+.tipbar{bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 62px)}
+body.resting .app{padding-bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 140px)}
+.lab3d .lcard{max-width:min(210px,calc(100vw - 80px))}
 </style>
 </head>
 <body>
@@ -2316,7 +2325,7 @@ function regSheet(){
 function bodyView(){
   const real=regionSets(),keys=Object.keys(REG),weak=keys.slice().sort((a,b)=>real[a]-real[b])[0],rec=mapMode==='rec',rs=rec?recRs():real;
   if(!selReg)selReg=weak;
-  return `<div class="${rec?'recmode':''}"><div class="modeseg" role="group" aria-label="Harita modu"><button class="${mapMode==='vol'?'on':''}" data-a="mapmode" data-v="vol" aria-pressed="${mapMode==='vol'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Yoğunluk</button><button class="${rec?'on':''}" data-a="mapmode" data-v="rec" aria-pressed="${rec}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/></svg>Toparlanma</button><button class="${mapMode==='3d'?'on':''}" data-a="mapmode" data-v="3d" aria-pressed="${mapMode==='3d'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>3D${isPro()?'':'<i class="prolock">★</i>'}</button></div><p class="modecap">${{vol:'Son 30 günde her kasa kaç set yaptığın',rec:'Hangi kasın bugün çalışmaya hazır olduğu',['3d']:'Gerçek anatomik model; çevir ve bir kasa dokun'}[mapMode]}</p><div class="chartbox bodybox">${!rec&&mapMode!=='3d'?'<button class="tmplay" data-a="tmplay" aria-label="Zaman yolculuğu: son 12 haftayı oynat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span id="tmlab" class="tmlab" hidden></span>':''}${mapMode==='3d'?spin3d(rs):`<div class="figs" id="figswrap">${figWithBubble('front',rs)}${figWithBubble('back',rs)}</div>`}
+  return `<div class="${rec?'recmode':''}"><div class="modeseg" role="group" aria-label="Harita modu"><button class="${mapMode==='vol'?'on':''}" data-a="mapmode" data-v="vol" aria-pressed="${mapMode==='vol'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg>Yoğunluk</button><button class="${rec?'on':''}" data-a="mapmode" data-v="rec" aria-pressed="${rec}"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4"/></svg>Toparlanma</button><button class="${mapMode==='3d'?'on':''}" data-a="mapmode" data-v="3d" aria-pressed="${mapMode==='3d'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>3D${isPro()?'':'<i class="prolock">★</i>'}</button></div><p class="modecap">${{vol:'Son 30 günde her kasa kaç set yaptığın',rec:'Hangi kasın bugün çalışmaya hazır olduğu',['3d']:'Gerçek anatomik model; çevir ve bir kasa dokun'}[mapMode]}</p><div class="chartbox bodybox">${!rec&&mapMode!=='3d'?`<button class="tmplay${tmT?' on':''}" data-a="tmplay" aria-label="Zaman yolculuğu: oynat ya da durdur">${tmT?TMI.pause:TMI.play}</button><span id="tmlab" class="tmlab"${tmT||tmK!=null?'':' hidden'}>${tmK!=null?(tmK?tmK+' hafta önce':'Bugün'):''}</span>`:''}${mapMode==='3d'?spin3d(rs):`<div class="figs" id="figswrap">${figWithBubble('front',rs)}${figWithBubble('back',rs)}</div>`}
   ${rec?'<div class="legend" aria-hidden="true"><span><i class="lgr3"></i>Dinleniyor</span><span><i class="lgr1"></i>Toparlanıyor</span><span><i class="lgr0"></i>Hazır</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Son 48 saatte çalışılan kaslar dinleniyor; yeşil olanları bugün rahatça çalıştırabilirsin.</p></div>':'<div class="legend" aria-hidden="true"><span>Az</span><i class="lg0"></i><i class="lg1"></i><i class="lg2"></i><i class="lg3"></i><span>Çok</span></div><p class="sub" style="text-align:center;margin:8px 0 2px">Renkler son 30 günde her bölgeye yaptığın set sayısı. Bir kasa dokun, özeti yanında açılır.</p></div>'}
   ${rec?recPanel():''}</div>`;
 }
@@ -2637,7 +2646,7 @@ function loop3d(){
   if(!T3.camT){T3.camT={y:0.86,d:4.1};T3.lookY=0.86;}
   if(T3.lookY==null)T3.lookY=0.86;
   {const c=T3.cam,tp=T3.camT;c.position.y+=(tp.y+0.08-c.position.y)*0.08;c.position.z+=(tp.d-c.position.z)*0.08;T3.lookY+=(tp.y-T3.lookY)*0.08;c.lookAt(0,T3.lookY,0);}
-  {const lab=document.getElementById('lab3d'),an=T3.anchor&&T3.anchor[selReg];if(lab&&!bubbleOn&&!lab.hidden)lab.hidden=true;if(lab&&an&&T3.ready&&bubbleOn){T3.group.updateMatrixWorld();const p=an.clone().applyMatrix4(T3.group.matrixWorld).project(T3.cam),cv=T3.renderer.domElement,w=cv.clientWidth,h=cv.clientHeight,x=(p.x+1)/2*w,y=(1-p.y)/2*h;lab.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;lab.classList.toggle('left',x>w-190);if(lab.hidden)lab.hidden=false;}}
+  {const lab=document.getElementById('lab3d'),an=T3.anchor&&T3.anchor[selReg];if(lab&&!bubbleOn&&!lab.hidden)lab.hidden=true;if(lab&&an&&T3.ready&&bubbleOn){T3.group.updateMatrixWorld();const p=an.clone().applyMatrix4(T3.group.matrixWorld).project(T3.cam),cv=T3.renderer.domElement,w=cv.clientWidth,h=cv.clientHeight,x=(p.x+1)/2*w,y=(1-p.y)/2*h;const yy=Math.min(Math.max(y,80),h-90),lf=x>w-200&&x>210;lab.style.transform=`translate(${x.toFixed(1)}px,${yy.toFixed(1)}px)`;lab.classList.toggle('left',lf);if(lab.hidden)lab.hidden=false;}}
   if(T3.mixer)T3.mixer.update(Math.min(0.05,T3.clock.getDelta()));
   T3.meshes.forEach(m=>{stepGrowth(m);const mt=m.material;if(m.userData.tc)mt.color.lerp(m.userData.tc,0.12);if(m.userData.sel){mt.emissive.setHex(heat3d?0x2f6fe0:0xff4a10);mt.emissiveIntensity=0.28+0.2*Math.sin(t*3.5);}else{mt.emissiveIntensity=0;}});
   T3.ring.material.opacity=0.65+0.25*Math.sin(t*2.4);
@@ -3194,11 +3203,14 @@ function injBar(){if(!injActive())return '';const d=Math.max(1,Math.ceil((S.inju
 /* zaman yolculuğu */
 function regionSetsAt(endT){const r={};Object.keys(REG).forEach(k=>r[k]=0);const lim=endT-30*864e5;S.workouts.forEach(w=>{const t=new Date(w.date).getTime();if(t<lim||t>endT)return;w.ex.forEach(e=>{const c=e.sets.filter(s=>s.done!==false).length;(meta(e.n).m||[]).forEach((k,i)=>r[k]+=i===0?c:c/2);});});Object.keys(r).forEach(k=>r[k]=Math.round(r[k]));return r;}
 let tmT=null;
-function tmPlay(){const fw=document.getElementById('figswrap'),lab=document.getElementById('tmlab'),btn=document.querySelector('.tmplay');if(!fw)return;if(tmT){clearInterval(tmT);tmT=null;}
-  const W=12,now=Date.now();let k=W;if(btn)btn.classList.add('on');if(lab)lab.hidden=false;
-  tmT=setInterval(()=>{const end=now-k*7*864e5,rs=regionSetsAt(end);const f=document.getElementById('figswrap');if(!f){clearInterval(tmT);tmT=null;return;}f.innerHTML=figWithBubble('front',rs)+figWithBubble('back',rs);
-    const l=document.getElementById('tmlab');if(l)l.textContent=k?`${k} hafta önce`:'Bugün';k--;if(k<0){clearInterval(tmT);tmT=null;setTimeout(()=>{const b=document.querySelector('.tmplay');if(b)b.classList.remove('on');const l2=document.getElementById('tmlab');if(l2)l2.hidden=true;},1400);}},380);}
-/* büyüyen avatar */
+let tmK=null;
+const TMI={play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',pause:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>'};
+function tmIcon(k){const b=document.querySelector('.tmplay');if(b){b.innerHTML=TMI[k];b.classList.toggle('on',k==='pause');}}
+let tmLast=0;function tmPlay(){const nw=Date.now();if(nw-tmLast<350)return;tmLast=nw;if(tmT){clearInterval(tmT);tmT=null;tmIcon('play');return;}
+  const W=12,now=Date.now();let k=tmK!=null?tmK:W;const lab=document.getElementById('tmlab');if(lab)lab.hidden=false;tmIcon('pause');
+  tmT=setInterval(()=>{const f=document.getElementById('figswrap');if(!f){if(tab!=='progress'||pview!=='body'||mapMode!=='vol'){clearInterval(tmT);tmT=null;tmK=null;}return;}const rs=regionSetsAt(now-k*7*864e5);f.innerHTML=figWithBubble('front',rs)+figWithBubble('back',rs);
+    const l=document.getElementById('tmlab');if(l)l.textContent=k?`${k} hafta önce`:'Bugün';tmK=k;k--;
+    if(k<0){clearInterval(tmT);tmT=null;tmK=null;tmIcon('play');setTimeout(()=>{const l2=document.getElementById('tmlab');if(l2&&!tmT)l2.hidden=true;},1400);}},380);}
 function growthMap(){const r={};Object.keys(REG).forEach(k=>r[k]=0);const lim=Date.now()-90*864e5;S.workouts.forEach(w=>{if(new Date(w.date).getTime()<lim)return;w.ex.forEach(e=>(meta(e.n).m||[]).forEach((k,i)=>r[k]+=i===0?e.sets.length:e.sets.length/2));});const mx=Math.max(1,...Object.values(r));Object.keys(r).forEach(k=>r[k]=Math.sqrt(r[k]/mx));return r;}
 function applyGrowth(){if(!T3||!T3.ready||!T3.musc)return;const TH=window.THREE,g=growthMap();T3.musc.forEach(m=>{if(!m.userData.p0){try{m.geometry.computeBoundingBox();m.userData.c=m.geometry.boundingBox.getCenter(new TH.Vector3());}catch(e){m.userData.c=new TH.Vector3();}m.userData.p0=m.position.clone();m.userData.s0=m.scale.clone();}m.userData.gk=1+0.15*(g[m.userData.r]||0);});}
 function stepGrowth(m){if(!m.userData.gk||!m.userData.s0)return;const cur=m.userData.ck||1,k=cur+(m.userData.gk-cur)*0.05;if(Math.abs(k-cur)<1e-4&&m.userData.ck)return;m.userData.ck=k;m.scale.copy(m.userData.s0).multiplyScalar(k);m.position.copy(m.userData.p0).add(m.userData.c.clone().multiply(m.userData.s0).applyQuaternion(m.quaternion).multiplyScalar(1-k));}
@@ -3241,7 +3253,7 @@ function render(){
   document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-current',b.dataset.v===tab?'page':'false'));
   renderRest();
 }
-function renderRest(){
+function renderRest(){document.body.classList.toggle('resting',!!(restEnd&&restEnd>Date.now()));
   const el=$('rest');
   if(!restEnd||!S.active){el.hidden=true;el.innerHTML='';return;}
   el.hidden=false;
