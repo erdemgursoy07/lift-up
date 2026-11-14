@@ -1198,6 +1198,7 @@ body.tc #view{padding-bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) -
 .tipbar{bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 62px)}
 body.resting .app{padding-bottom:calc(max(4px,calc(env(safe-area-inset-bottom,0px) - 18px)) + 140px)}
 .lab3d .lcard{max-width:min(210px,calc(100vw - 80px))}
+.advt .row{padding:6px 12px}
 </style>
 </head>
 <body>
@@ -2067,8 +2068,8 @@ function charts(){
   const pts=exHistory(progEx),u=unit(progEx),first=pts[0].v,last=pts[pts.length-1].v,p=pctTxt(last,first),rec=records();
   const seg=subSeg('chartsub',chartSub,[['guc','Güç'],['hacim','Hacim'],['rekor','Rekorlar'],['analiz','Analiz']]);
   if(chartSub==='hacim')return seg+`<div class="chartbox"><div class="chart-top"><div><b class="cht">Haftalık hacim</b><span>Her hafta kaldırdığın toplam ağırlık</span></div></div>${bars()}</div>`;
-  if(chartSub==='rekor')return seg+`<div class="list">${Object.keys(rec).slice(0,7).map(n=>`<div class="row"><span>${nmH(n)}<small>${fmtDate(rec[n].date)}${ratioTxt(n,rec[n].v)}</small></span><span class="v">${fmtKg(rec[n].v)} ${unit(n)}</span><button class="shbtn" data-a="prshare" data-v="${n}" aria-label="${esc(trN(n))} rekorunu paylaş"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5h14v-5"/></svg></button></div>`).join('')||'<p class="empty">Henüz rekor yok.</p>'}</div>`;
-  if(chartSub==='analiz')return seg+advHtml().replace('<h2>Gelişmiş analiz</h2>','');
+  if(chartSub==='rekor')return seg+`<div class="list">${Object.keys(rec).slice(0,6).map(n=>`<div class="row"><span>${nmH(n)}<small>${fmtDate(rec[n].date)}${ratioTxt(n,rec[n].v)}</small></span><span class="v">${fmtKg(rec[n].v)} ${unit(n)}</span><button class="shbtn" data-a="prshare" data-v="${n}" aria-label="${esc(trN(n))} rekorunu paylaş"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v5h14v-5"/></svg></button></div>`).join('')||'<p class="empty">Henüz rekor yok.</p>'}</div>`;
+  if(chartSub==='analiz'){const ah=advHtml(),k=ah.indexOf('<p class="sub" style="margin-top:14px">');return seg+(k>0?'<p class="sub" style="margin:0 0 6px">'+ah.slice(k+40):ah.replace('<h2>Gelişmiş analiz</h2>',''));}
   return seg+`<label class="exsel"><span>Hareket</span><select data-c="pex" aria-label="Hareket seç">${names.map(n=>`<option value="${n}"${n===progEx?' selected':''}>${esc(nmT(n))}</option>`).join('')}</select></label>
   <div class="chartbox"><div class="chart-top"><div><b class="num">${fmtKg(last)} ${u}</b><span>Son antrenmandaki en iyi set</span></div>${p&&pts.length>1?`<div class="${last>=first?'up':'down'}">${p}<span>ilk kayda göre</span></div>`:''}</div>${lineChart(pts,u)}</div>`;
 }
