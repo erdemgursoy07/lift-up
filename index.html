@@ -1206,6 +1206,8 @@ body.tc .chat{padding-bottom:10px;-webkit-mask-image:linear-gradient(to bottom,#
 body.tc .cbar{margin-top:6px;position:relative;z-index:2;background:var(--bg)}
 .lab3d .lcard{width:190px;box-sizing:border-box}
 .lab3d.mid .lcard::before{display:none}
+.obwelcome .obfig{-webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);width:250px}
+.obwelcome .obfig{width:calc(100% + 36px);max-width:none;height:auto;aspect-ratio:600/246;margin:-10px -18px 0}
 </style>
 </head>
 <body>
@@ -2895,7 +2897,7 @@ const TIPS2={home:['Sağ üstteki ? ile bu ekranın açıklamasını tekrar gör
   coach:['Koça “bugün yorgunum” de, sana kısa bir antrenman önersin.','Koç programını değiştirebilir; yaptığını ✓ ile gösterir.','Takıldığın hareketi sor, çözüm önersin.'],
   profile:['Basit görünüm, yeni başlayanlar için gelişmiş seçenekleri gizler.','Dinlenme süreni buradan değiştirebilirsin.','Antrenmanlarını Excel dosyası olarak indirebilirsin.']};
 let tipT=null;
-function showTip(t){const old=document.getElementById('tipbar');if(old)old.remove();clearTimeout(tipT);if(!S.onb||!TIPS2[t]||tourI>=0||!(S.seen&&S.seen[t]))return;S.tipI=S.tipI||{};const i=(S.tipI[t]||0)%TIPS2[t].length;S.tipI[t]=i+1;save();
+function showTip(t){return;const old=document.getElementById('tipbar');if(old)old.remove();clearTimeout(tipT);if(!S.onb||!TIPS2[t]||tourI>=0||!(S.seen&&S.seen[t]))return;S.tipI=S.tipI||{};const i=(S.tipI[t]||0)%TIPS2[t].length;S.tipI[t]=i+1;save();
   const el=document.createElement('button');el.id='tipbar';el.className='tipbar'+(restEnd&&S.active?' up':'');el.setAttribute('role','status');el.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span><b>İpucu</b> ${TIPS2[t][i]}</span>`;
   el.addEventListener('click',()=>{el.classList.add('out');setTimeout(()=>el.remove(),250);});document.body.appendChild(el);tipT=setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),300);},3600);}
 S.visits=S.visits||{};if(S.onb)S.visits[tab]=(S.visits[tab]||0)+1;
@@ -2930,7 +2932,7 @@ function genProgram(goal,exp,days,opt){
 }
 function onboarding(){
   const st=ob.step,first=(ob.name||'').trim().split(' ')[0],N=6;let c='';
-  if(st===0)c=eqCols()+`<div class="obwelcome"><svg class="obfig anim" viewBox="20 -14 160 168" aria-hidden="true"><g id="obanim"></g></svg>${LOGO}<h1 class="obbrand">Up-Step</h1><p class="lead2">Her antrenmanda biraz daha ağır. Antrenmanlarını kaydet, ilerlemeni gör, hangi kası ihmal ettiğini bil.</p></div><button class="btn" data-a="obnext">Başlayalım</button>`;
+  if(st===0)c=eqCols()+`<div class="obwelcome"><svg class="obfig anim" viewBox="-300 0 600 246" aria-hidden="true"><g id="obanim"></g></svg>${LOGO}<h1 class="obbrand">Up-Step</h1><p class="lead2">Her antrenmanda biraz daha ağır. Antrenmanlarını kaydet, ilerlemeni gör, hangi kası ihmal ettiğini bil.</p></div><button class="btn" data-a="obnext">Başlayalım</button>`;
   else if(st===1)c=`<h1>Hedefin ne?</h1><p class="lead">Programını buna göre hazırlayacağız.</p>${Object.entries(GOALS).map(([k,g])=>optCardT('obgoal',k,g,ob.goal===k,GOALTH[k])).join('')}<button class="btn" data-a="obnext">Devam</button>`;
   else if(st===2)c=`<h1>Ne kadar deneyimlisin?</h1><p class="lead">Hareket seçimi ve set sayıları buna göre ayarlanır.</p>${Object.entries(EXPS).map(([k,g])=>optCard('obexp',k,g,ob.exp===k)).join('')}<button class="btn" data-a="obnext">Devam</button>`;
   else if(st===3)c=`<h1>Seni tanıyalım</h1><p class="lead">Güç oranların ve önerilerin için kullanılır.</p>${obBody()}<button class="btn" data-a="obnext" style="margin-top:16px">Devam</button>`;
@@ -3030,7 +3032,7 @@ const optCardT=(a,k,o,on,th)=>`<button class="opt optt${on?' on':''}" data-a="${
 let figTok={};
 function loopFig(id,an){if(!an)return;let reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}const tok=(figTok[id]=(figTok[id]||0)+1),t0=performance.now();
   const step=now=>{if(figTok[id]!==tok)return;const el=document.getElementById(id);if(!el)return;el.innerHTML=animSvg(an,reduce?0.6:ease(((now-t0)/3400)%1));if(!reduce)requestAnimationFrame(step);};requestAnimationFrame(step);}
-function startFigs(){if(document.getElementById('heroanim')&&S.prog){const nd=S.prog.days[S.prog.next||0]||S.prog.days[0];loopFig('heroanim',nd&&nd.ex[0]&&animFor(nd.ex[0].n)||ANIM['Squat']);}if(document.getElementById('obanim'))loopFig('obanim',ANIM['Squat']);}
+function startFigs(){if(document.getElementById('heroanim')&&S.prog){const nd=S.prog.days[S.prog.next||0]||S.prog.days[0];loopFig('heroanim',nd&&nd.ex[0]&&animFor(nd.ex[0].n)||ANIM['Squat']);}if(document.getElementById('obanim'))loopWelcome('obanim');}
 let profSec=null,recAll=false;
 const PSICON={'Takviyeler':'M9 3h6v4H9zM7 7h10v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1zM10 12h4M12 10v4','Seviye ve rozetler':'M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z','Vücut bilgileri':'M12 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM5 21v-2a7 7 0 0 1 14 0v2','Haftalık hedef':'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z','Antrenman':'M6 6v12M3 9v6M18 6v12M21 9v6M6 12h12','Hatırlatmalar':'M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0','Görünüm ve veriler':'M12 3a9 9 0 1 0 0 18c1 0 2-1 2-2s-1-1-1-2 1-2 2-2h2a4 4 0 0 0 4-4c0-4-4-8-9-8z','Veriler':'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6','Yardım':'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01'};
 function profSub(t){const b=S.body,li=levelInfo(),bs=badgeState(),r=S.rem;return ({'Seviye ve rozetler':`Seviye ${li.level}, ${bs.filter(x=>x.ok).length}/${bs.length} rozet`,'Vücut bilgileri':`${b.h} cm, ${fmtKg(b.w)} kg, ${b.age} yaş`,'Haftalık hedef':`Haftada ${S.goal} antrenman`,'Antrenman':`Dinlenme süresi ${mmss(S.restSec||90)}`,'Hatırlatmalar':r.on?`${r.days.map(i=>DAYS[i]).join(', ')||'Gün seçilmedi'}, ${r.time}`:'Kapalı','Görünüm ve veriler':`Tema: ${{auto:'Otomatik',light:'Açık',dark:'Koyu',oled:'Simsiyah'}[S.theme||'light']}${simple()?', basit görünüm':''}`,'Takviyeler':(S.supp||[]).length?`${S.supp.length} takviye, hatırlatma açık`:'Kreatin, protein tozu…','Veriler':'Örnek veriler ve sıfırlama','Yardım':'İlk açılış ve rehberli tur'})[t]||'';}
@@ -3249,6 +3251,76 @@ function backupUp(t){const f=t.files&&t.files[0];if(!f)return;const r=new FileRe
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input:not([type=range]):not([type=file]),textarea,select'))document.body.classList.add('kb');});
 document.addEventListener('focusout',()=>{setTimeout(()=>{const a=document.activeElement;if(!(a&&a.matches&&a.matches('input:not([type=range]):not([type=file]),textarea,select')))document.body.classList.remove('kb');},60);});
 function chatBottom(){[30,250].forEach(t=>setTimeout(()=>{const c=document.getElementById('chat');if(c)c.scrollTop=c.scrollHeight;},t));}
+/* Karşılama ekranı: özel omuz presi animasyonu (önden görünüm) */
+function ik2(sx,sy,hx,hy,l1,l2,side){const dx=hx-sx,dy=hy-sy;let d=Math.hypot(dx,dy);d=Math.min(d,l1+l2-0.01);const a=Math.atan2(dy,dx),b=Math.acos((l1*l1+d*d-l2*l2)/(2*l1*d));const ang=a+side*b;return [sx+l1*Math.cos(ang),sy+l1*Math.sin(ang)];}
+function pressSvg(t){
+  const E=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+  let lift,dip,glow=0;
+  if(t<.18){lift=0;dip=E(t/.18);}
+  else if(t<.5){const k=E((t-.18)/.32);lift=k;dip=1-Math.min(1,k*2.2);}
+  else if(t<.72){lift=1;dip=0;glow=Math.sin((t-.5)/.22*Math.PI);}
+  else{lift=1-E((t-.72)/.28);dip=0;}
+  const hipY=150+dip*9,shY=92+dip*9,headY=60+dip*9,barY=(shY-6)-lift*66,hx=46;
+  const ink='var(--fig,#1F262B)';
+  const leg=(s)=>{const hx2=s*12,kx=s*(15+dip*4),ky=hipY+34,fx=s*16;return `<path d="M${hx2} ${hipY} L${kx} ${ky} L${fx} 222" fill="none" stroke="${ink}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M${fx-s*2} 222 h${s*14}" stroke="${ink}" stroke-width="10" stroke-linecap="round"/>`;};
+  const arm=(s)=>{const sx=s*24,[ex,ey]=ik2(sx,shY,s*hx,barY+3,31,31,s>0?-1:1);return `<path d="M${sx} ${shY} L${ex.toFixed(1)} ${ey.toFixed(1)} L${s*hx} ${(barY+3).toFixed(1)}" fill="none" stroke="${ink}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;};
+  const P=[['#E0334A',46],['#3D7BEA',38],['#F2B705',30],['#2E9E4F',24]];
+  const plates=s=>P.map(([c,h],i)=>`<rect x="${s>0?60+i*9:-69-i*9}" y="${(barY-h/2).toFixed(1)}" width="8" height="${h}" rx="3" fill="${c}"/>`).join('');
+  const sh=1-lift*0.25;
+  return `<ellipse cx="0" cy="226" rx="${(58*sh).toFixed(1)}" ry="6" fill="var(--fig,#1F262B)" opacity=".12"/>
+  ${glow>0?`<ellipse cx="0" cy="${barY+34}" rx="${60+glow*10}" ry="${44+glow*8}" fill="#F2B705" opacity="${(glow*0.18).toFixed(3)}"/>`:''}
+  ${leg(-1)}${leg(1)}
+  <path d="M-25 ${shY-4} Q0 ${shY-10} 25 ${shY-4} L16 ${hipY+2} Q0 ${hipY+6} -16 ${hipY+2} Z" fill="${ink}"/>
+  <circle cx="0" cy="${headY}" r="15" fill="${ink}"/><circle cx="-5.5" cy="${headY-2}" r="2.3" fill="var(--bg,#fff)"/><circle cx="5.5" cy="${headY-2}" r="2.3" fill="var(--bg,#fff)"/><path d="M-4.5 ${headY+6} Q0 ${headY+8.5} 4.5 ${headY+6}" stroke="var(--bg,#fff)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M-12 ${shY+8} Q-6 ${shY+16} 0 ${shY+12} Q6 ${shY+16} 12 ${shY+8}" stroke="var(--bg,#fff)" stroke-width="1.6" fill="none" opacity=".35"/><rect x="-17" y="${hipY-12}" width="34" height="8" rx="2" fill="#E0334A"/><rect x="-4" y="${hipY-13}" width="8" height="10" rx="2" fill="none" stroke="#F2B705" stroke-width="2"/>
+  ${arm(-1)}${arm(1)}
+  <rect x="-104" y="${(barY-3.5).toFixed(1)}" width="208" height="7" rx="3.5" fill="#9AA4AC"/>${plates(1)}${plates(-1)}
+  <rect x="-108" y="${(barY-5).toFixed(1)}" width="6" height="10" rx="2" fill="#7B858F"/><rect x="102" y="${(barY-5).toFixed(1)}" width="6" height="10" rx="2" fill="#7B858F"/>
+  ${glow>0.3?`<g stroke="#F2B705" stroke-width="3" stroke-linecap="round" opacity="${glow.toFixed(2)}"><path d="M-6 ${barY-22} v-10M6 ${barY-24} v-14M18 ${barY-20} v-9M-18 ${barY-20} v-9"/></g>`:''}`;}
+let prTok=0;
+const INK='var(--fig,#1F262B)',BG='var(--bg,#fff)';
+function E2(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+function face(x,y){return `<circle cx="${x}" cy="${y}" r="15" fill="${INK}"/><circle cx="${x-5.5}" cy="${y-2}" r="2.3" fill="${BG}"/><circle cx="${x+5.5}" cy="${y-2}" r="2.3" fill="${BG}"/><path d="M${x-4.5} ${y+6} Q${x} ${y+8.5} ${x+4.5} ${y+6}" stroke="${BG}" stroke-width="2" fill="none" stroke-linecap="round"/>`;}
+function db(x,y){return `<rect x="${x-13}" y="${y-2.5}" width="26" height="5" rx="2.5" fill="#9AA4AC"/><rect x="${x-14}" y="${y-8}" width="6" height="16" rx="2" fill="#3D7BEA"/><rect x="${x+8}" y="${y-8}" width="6" height="16" rx="2" fill="#3D7BEA"/>`;}
+function curlSvg(t){const k=t<.45?E2(t/.45):t<.6?1:1-E2((t-.6)/.4);const shY=92,hipY=150;
+  const arm=s=>{const sx=s*24,ex=s*25,ey=126,hy=ey+30*Math.cos(k*Math.PI*0.85),hx=ex-s*4*k;return `<path d="M${sx} ${shY} L${ex} ${ey} L${hx.toFixed(1)} ${hy.toFixed(1)}" fill="none" stroke="${INK}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>${db(hx,hy)}`;};
+  const leg=s=>`<path d="M${s*12} ${hipY} L${s*14} ${hipY+36} L${s*16} 222" fill="none" stroke="${INK}" stroke-width="15" stroke-linecap="round"/><path d="M${s*14} 222 h${s*14}" stroke="${INK}" stroke-width="10" stroke-linecap="round"/>`;
+  return `<ellipse cx="0" cy="226" rx="52" ry="6" fill="${INK}" opacity=".12"/>${leg(-1)}${leg(1)}<path d="M-25 ${shY-4} Q0 ${shY-10} 25 ${shY-4} L16 ${hipY+2} Q0 ${hipY+6} -16 ${hipY+2} Z" fill="${INK}"/>${face(0,60)}${arm(-1)}${arm(1)}`;}
+function squatSvg(t){const k=t<.45?E2(t/.45):t<.55?1:1-E2((t-.55)/.45);const d=k*34,hipY=150+d,shY=92+d*0.92,headY=60+d*0.92;
+  const leg=s=>{const kx=s*(16+k*16),ky=Math.min(hipY+30-k*6,212);return `<path d="M${s*12} ${hipY} L${kx} ${ky} L${s*20} 222" fill="none" stroke="${INK}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M${s*18} 222 h${s*14}" stroke="${INK}" stroke-width="10" stroke-linecap="round"/>`;};
+  const arm=s=>`<path d="M${s*24} ${shY} L${s*40} ${shY+14} L${s*44} ${shY-4}" fill="none" stroke="${INK}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const P=[['#E0334A',46],['#3D7BEA',38],['#F2B705',30],['#2E9E4F',24]],by=shY-4;
+  const pl=s=>P.map(([c,h],i)=>`<rect x="${s>0?60+i*9:-69-i*9}" y="${by-h/2}" width="8" height="${h}" rx="3" fill="${c}"/>`).join('');
+  return `<ellipse cx="0" cy="226" rx="${58+k*8}" ry="6" fill="${INK}" opacity=".12"/>${leg(-1)}${leg(1)}<path d="M-25 ${shY-4} Q0 ${shY-10} 25 ${shY-4} L16 ${hipY+2} Q0 ${hipY+6} -16 ${hipY+2} Z" fill="${INK}"/>${face(0,headY)}<rect x="-104" y="${by-3.5}" width="208" height="7" rx="3.5" fill="#9AA4AC"/>${pl(1)}${pl(-1)}${arm(-1)}${arm(1)}`;}
+function benchSvg(t){const k=t<.4?E2(t/.4):t<.6?1:1-E2((t-.6)/.4);const chest=150,by=chest-12-k*48;
+  return `<ellipse cx="0" cy="226" rx="80" ry="6" fill="${INK}" opacity=".12"/><rect x="-70" y="160" width="120" height="10" rx="5" fill="#8D98A3"/><rect x="-60" y="170" width="8" height="52" rx="3" fill="#8D98A3"/><rect x="34" y="170" width="8" height="52" rx="3" fill="#8D98A3"/>
+  <path d="M-46 152 L30 152" stroke="${INK}" stroke-width="20" stroke-linecap="round"/><circle cx="-62" cy="148" r="14" fill="${INK}"/>
+  <path d="M30 152 L58 150 L60 222" fill="none" stroke="${INK}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 222 h14" stroke="${INK}" stroke-width="10" stroke-linecap="round"/>
+  <path d="M-20 146 L${-30+k*6} ${(146+by)/2+(1-k)*8} L-14 ${by}" fill="none" stroke="${INK}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="-22" y="${by-3}" width="16" height="6" rx="3" fill="#9AA4AC"/><circle cx="-14" cy="${by}" r="22" fill="#E0334A"/><circle cx="-14" cy="${by}" r="15" fill="#3D7BEA"/><circle cx="-14" cy="${by}" r="9" fill="#F2B705"/><circle cx="-14" cy="${by}" r="4" fill="#9AA4AC"/>`;}
+
+
+function plt(barY,big){const P=big?[['#E0334A',46],['#3D7BEA',40],['#F2B705',32],['#2E9E4F',26]]:[['#E0334A',46],['#3D7BEA',38],['#F2B705',30],['#2E9E4F',24]];return s=>P.map(([c,h],i)=>`<rect x="${s>0?60+i*9:-69-i*9}" y="${(barY-h/2).toFixed(1)}" width="8" height="${h}" rx="3" fill="${c}"/>`).join('');}
+function deadliftSvg(t){const k=t<.45?E2(t/.45):t<.6?1:1-E2((t-.6)/.4);const L=(a,b)=>a+(b-a)*k;
+  const headY=L(96,60),shY=L(122,92),hipY=L(162,150),barY=L(200,154),kneeY=L(194,188),kx=L(19,15);
+  const leg=s=>`<path d="M${s*12} ${hipY.toFixed(1)} L${s*kx} ${kneeY.toFixed(1)} L${s*16} 222" fill="none" stroke="${INK}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M${s*14} 222 h${s*14}" stroke="${INK}" stroke-width="10" stroke-linecap="round"/>`;
+  const arm=s=>`<path d="M${s*24} ${shY.toFixed(1)} L${s*30} ${barY.toFixed(1)}" fill="none" stroke="${INK}" stroke-width="12" stroke-linecap="round"/>`;
+  const p=plt(barY,true);
+  return `<ellipse cx="0" cy="226" rx="60" ry="6" fill="${INK}" opacity=".12"/>${leg(-1)}${leg(1)}<path d="M-25 ${(shY-4).toFixed(1)} Q0 ${(shY-10).toFixed(1)} 25 ${(shY-4).toFixed(1)} L16 ${(hipY+2).toFixed(1)} Q0 ${(hipY+6).toFixed(1)} -16 ${(hipY+2).toFixed(1)} Z" fill="${INK}"/>${face(0,headY)}<rect x="-17" y="${(hipY-12).toFixed(1)}" width="34" height="8" rx="2" fill="#E0334A"/>${arm(-1)}${arm(1)}<rect x="-104" y="${(barY-3.5).toFixed(1)}" width="208" height="7" rx="3.5" fill="#9AA4AC"/>${p(1)}${p(-1)}`;}
+function pullupSvg(t){const k=t<.45?E2(t/.45):t<.6?1:1-E2((t-.6)/.4);const bar=24,shY=76-k*30,headY=shY-30,hipY=shY+58;
+  const arm=s=>{const sx=s*24,[ex,ey]=ik2(sx,shY,s*44,bar,29,29,s>0?1:-1);return `<path d="M${sx} ${shY.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)} L${s*44} ${bar}" fill="none" stroke="${INK}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;};
+  const leg=s=>`<path d="M${s*12} ${hipY.toFixed(1)} L${s*13} ${(hipY+36).toFixed(1)} L${s*10} ${(hipY+70).toFixed(1)}" fill="none" stroke="${INK}" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>`;
+  return `<ellipse cx="0" cy="226" rx="${(40-k*10).toFixed(1)}" ry="5" fill="${INK}" opacity="${(.12-k*.05).toFixed(3)}"/><rect x="-82" y="${bar-4}" width="164" height="8" rx="4" fill="#9AA4AC"/><rect x="-86" y="${bar-4}" width="8" height="${226-bar}" rx="3" fill="#8D98A3"/><rect x="78" y="${bar-4}" width="8" height="${226-bar}" rx="3" fill="#8D98A3"/>${leg(-1)}${leg(1)}<path d="M-25 ${(shY-4).toFixed(1)} Q0 ${(shY-10).toFixed(1)} 25 ${(shY-4).toFixed(1)} L16 ${(hipY+2).toFixed(1)} Q0 ${(hipY+6).toFixed(1)} -16 ${(hipY+2).toFixed(1)} Z" fill="${INK}"/>${face(0,headY)}${arm(-1)}${arm(1)}`;}
+
+const WMOVES=[pressSvg,curlSvg,squatSvg,deadliftSvg,benchSvg,pullupSvg];
+function welcomeStrip(e){const SP=230,N=WMOVES.length,W=SP*N,off=(e*0.085)%W;let h='';
+  for(let r=0;r<2;r++)for(let i=0;i<N;i++){const x=i*SP+r*W-off-W/2+SP/2;if(x<-360||x>360)continue;const ph=((e/1500)+i*0.27)%1;h+=`<g transform="translate(${x.toFixed(1)} 18) scale(.86)">${WMOVES[i](ph)}</g>`;}
+  return h;}
+function loopWelcome(id){let reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}const tok=++prTok,t0=performance.now();
+  const step=now=>{if(tok!==prTok)return;const el=document.getElementById(id);if(!el)return;el.innerHTML=welcomeStrip(reduce?0:Math.max(0,now-t0));if(!reduce)requestAnimationFrame(step);};requestAnimationFrame(step);}
+
+function loopPress(id){let reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}const tok=++prTok,t0=performance.now();
+  const step=now=>{if(tok!==prTok)return;const el=document.getElementById(id);if(!el)return;el.innerHTML=pressSvg(reduce?0.6:((now-t0)/3200)%1);if(!reduce)requestAnimationFrame(step);};requestAnimationFrame(step);}
+
 const VIEWS={home,workout,progress,profile,coach};
 function render(){
   applyTheme();
